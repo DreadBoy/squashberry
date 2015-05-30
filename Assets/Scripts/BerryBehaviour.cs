@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider))]
 public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
@@ -280,7 +279,7 @@ public class BerryBehaviour : MonoBehaviour
 		splash.transform.position = transform.position + Vector3.up * 0.01f;
 
 		// Turn off colliders
-		GetComponent<Collider>().enabled = false;
+		GameObject.Find("Bone").gameObject.GetComponent<SphereCollider>().enabled = false;
 	}
 
 	private void SquashState()
@@ -341,7 +340,7 @@ public class BerryBehaviour : MonoBehaviour
 
 
 		// Turn on colliders
-		GetComponent<Collider>().enabled = true;
+		GameObject.Find("Bone").GetComponent<SphereCollider>().enabled = true;
 		transform.GetComponent<Rigidbody>().isKinematic = false; 
 	}
 

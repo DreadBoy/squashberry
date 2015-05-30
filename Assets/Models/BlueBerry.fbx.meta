@@ -10,11 +10,17 @@ ModelImporter:
     100004: Sphere
     100006: Berry
     100008: Ref
+    100010: Armature
+    100012: Bone
+    100014: Bone_end
     400000: //RootNode
     400002: Empty
     400004: Sphere
     400006: Berry
     400008: Ref
+    400010: Armature
+    400012: Bone
+    400014: Bone_end
     4300000: Sphere
     4300002: Berry
     7400000: Empty|EmptyAction
@@ -29,6 +35,7 @@ ModelImporter:
     7400018: Berry|SphereAction
     7400020: Ref|Jump
     7400022: Berry|Jump
+    7400024: Jump
     9500000: //RootNode
     13700000: Sphere
     13700002: Berry
@@ -49,19 +56,19 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Ref|EmptyAction.001
-      takeName: Ref|EmptyAction.001
+      name: Jump
+      takeName: Armature|Jump
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 12
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 1
+      loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 0
@@ -74,101 +81,11 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Berry
+      - path: Armature
         weight: 1
-      - path: Ref
+      - path: Armature/Bone
         weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-    - serializedVersion: 16
-      name: Ref|Jump
-      takeName: Ref|Jump
-      firstFrame: 0
-      lastFrame: 12
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: Berry
-        weight: 1
-      - path: Ref
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-    - serializedVersion: 16
-      name: Berry|EmptyAction.001
-      takeName: Berry|EmptyAction.001
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: Berry
-        weight: 1
-      - path: Ref
-        weight: 1
-      maskType: 0
-      maskSource: {instanceID: 0}
-    - serializedVersion: 16
-      name: Berry|Jump
-      takeName: Berry|Jump
-      firstFrame: 0
-      lastFrame: 12
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: -.649999976
-      cycleOffset: 0
-      loop: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
+      - path: Armature/Bone/Bone_end
         weight: 1
       - path: Berry
         weight: 1
