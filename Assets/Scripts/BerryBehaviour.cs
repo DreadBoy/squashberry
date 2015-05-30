@@ -19,7 +19,7 @@ public class BerryBehaviour : MonoBehaviour
 	public float maxForce;
 
 	// System
-	public enum BerryState { Idle, Move, Die }
+	public enum BerryState { Idle, Move, Squash, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
 
@@ -44,6 +44,7 @@ public class BerryBehaviour : MonoBehaviour
 	void Awake()
 	{
 		transform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+		target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
 		position = transform.position;
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
@@ -58,8 +59,9 @@ public class BerryBehaviour : MonoBehaviour
     {
         if( !EventSystem.current.IsPointerOverGameObject() )
         {
-        	BlenderBehaviour.liquidAmount += 1;
-            Destroy(gameObject);
+        	// BlenderBehaviour.liquidAmount += 1;
+            // Destroy(gameObject);
+            currentState = BerryState.Squash;
         }
     }
 //////////////////////////////////////////////////////////// EO UNITY METHODS //
@@ -100,6 +102,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Move:
 				MoveEnterState();
 				break;
+			case BerryState.Squash:
+				SquashEnterState();
+				break;
 			// case BerryState.Die:
 			// 	DieEnterState();
 			// 	break;
@@ -116,6 +121,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Move:
 				MoveState();
 				break;
+			case BerryState.Squash:
+				SquashState();
+				break;
 			// case BerryState.Die:
 			// 	DieState();
 			// 	break;
@@ -131,6 +139,9 @@ public class BerryBehaviour : MonoBehaviour
 				break;
 			case BerryState.Move:
 				MoveExitState();
+				break;
+			case BerryState.Squash:
+				SquashExitState();
 				break;
 			// case BerryState.Die:
 			// 	DieExitState();
@@ -214,6 +225,32 @@ public class BerryBehaviour : MonoBehaviour
 		// if( FSM_DEBUG ) print("FSM -> MoveExitState");
 	}
 // EO MOVE STATE //
+
+// IDLE STATE //
+	private float squashTime;
+	private void SquashEnterState()
+	{
+		DebugEnter( "Squash" );
+
+		squashTime = Time.time;
+
+		GameObject splash = Instantiate( Resources.Load("Splash") ) as GameObject;
+		splash.transform.position = transform.position - Vector3.up * 0.4f;
+	}
+
+	private void SquashState()
+	{
+		DebugExecute( "Squash" );
+
+		// if( Time.time - squashTime > 1 )
+		// 	currentState = BerryState.FromTable;
+	}
+
+	private void SquashExitState()
+	{
+		DebugExit( "Idle" );
+	}
+// EO IDLE STATE //
 
 // STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
 	private Vector3 desiredVelocity;
