@@ -34,6 +34,7 @@ public class BlenderBehaviour : MonoBehaviour
 			liquid.position = new Vector3( liquid.position.x, liquidAmount/2 + 0.5f, liquid.position.z );
 		}
 	}
+	private Animator animator;
 
 // UNITY METHODS ///////////////////////////////////////////////////////////////
 
@@ -44,7 +45,9 @@ public class BlenderBehaviour : MonoBehaviour
 		currentState = BlenderState.Idle;
 		liquid = transform.Find("Liquid");
 		blades = transform.Find("Blades");
-		liquid.gameObject.SetActive( false );
+		// liquid.gameObject.SetActive( false );
+
+		animator = GetComponent<Animator>();
 	}
 	
 	void FixedUpdate ()
@@ -194,7 +197,7 @@ public class BlenderBehaviour : MonoBehaviour
 		transform.position = initPosition;
 
 		// Empty blender
-		liquidAmount = 0;
+		// liquidAmount = 0;
 	}
 // EO BLEND STATE //
 }

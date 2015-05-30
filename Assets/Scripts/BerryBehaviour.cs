@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
-	private static bool FSM_DEBUG = false;
+	private static bool FSM_DEBUG = true;
 
 	// public Transform targetTransform;
 
@@ -23,6 +23,7 @@ public class BerryBehaviour : MonoBehaviour
 	private BerryState _state;
 	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
 	private float bornTime;
+	private Animator animator;
 
 	private Vector3 position;
 	private Vector3 velocity;
@@ -46,10 +47,12 @@ public class BerryBehaviour : MonoBehaviour
 	{
 		bornTime = Time.time;
 
-		transform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+		animator = GetComponent<Animator>();
+
+		transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
 		position = transform.position;
 
-		target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+		target = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
 
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
@@ -204,6 +207,8 @@ public class BerryBehaviour : MonoBehaviour
 	private void MoveEnterState()
 	{
 		DebugEnter( "Move" );
+
+		animator.SetTrigger( "Jumping" );
 	}
 
 	private Vector3 target;
@@ -215,7 +220,7 @@ public class BerryBehaviour : MonoBehaviour
 		// Vector3 target = targetTransform.position;
 		if( (target - position).magnitude < 1 ){
 			// targetTransform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-			target = new Vector3( Random.Range( 0,10 ), 0.5f, Random.Range( 0,10 ) );
+			target = new Vector3( Random.Range( 0,10 ), 0, Random.Range( 0,10 ) );
 		}
 
 		// STEERING ///////////////////////////////////////////////////////////////
@@ -263,10 +268,11 @@ public class BerryBehaviour : MonoBehaviour
 
 		// Change view to squished
 		print("implement model to squished model transition");
+		animator.SetTrigger( "Idle" );
 
 		// Spawn splash graphics
 		GameObject splash = Instantiate( Resources.Load("Splash") ) as GameObject;
-		splash.transform.position = transform.position - Vector3.up * 0.4f;
+		splash.transform.position = transform.position + Vector3.up * 0.1f;
 
 		// Turn off colliders
 		GetComponent<Collider>().enabled = false;
