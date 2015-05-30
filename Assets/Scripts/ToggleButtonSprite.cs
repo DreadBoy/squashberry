@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using System;
+using UnityEngine.UI;
 
 public class ToggleButtonSprite : MonoBehaviour
 {
-
-
     private Button button;
     [SerializeField]
     private Sprite altSprite;
