@@ -180,8 +180,8 @@ public class BlenderBehaviour : MonoBehaviour
 		float force = 0.3f;
 		// transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
 
-		// // Rotate blades
-		// blades.transform.Rotate( Vector3.up * 20 );
+		// Rotate blades
+		blades.transform.Rotate( Vector3.up * 20 );
 
 		// Stop blending
 		if( Time.time - startBlendingTime > 3 ){
