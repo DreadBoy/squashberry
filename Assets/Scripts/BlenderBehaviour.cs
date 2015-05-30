@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class BlenderBehaviour : MonoBehaviour
 {
 	private static bool FSM_DEBUG = false;
 	public static BlenderBehaviour instance;
+	public static List<BerryBehaviour> beriesInBlender = new List<BerryBehaviour>();
 
 	// System
 	private BlenderState _state;
-	private Vector3 initPosition;
+	public static Vector3 initPosition;
 	private static float _liquidAmount = 0;
 	private static Transform liquid;
 	private static Transform blades;
@@ -167,11 +169,14 @@ public class BlenderBehaviour : MonoBehaviour
 
 	// BLEND STATE //
 	private float startBlendingTime;
+	public Transform levelMarker;
 
 	private void BlendEnterState()
 	{
 		DebugEnter("Blend");
+
 		startBlendingTime = Time.time;
+
 	}
 
 	private void BlendState()

@@ -7,6 +7,7 @@ public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
 	private static bool FSM_DEBUG = false;
+	private static bool AUTO_SQUASH = true;
 
 	// public Transform targetTransform;
 
@@ -297,9 +298,9 @@ public class BerryBehaviour : MonoBehaviour
 		// Rotate towards directions
 		transform.rotation = Quaternion.LookRotation( velocity );
 
-		// // Auto squash
-		// if( Time.time - bornTime > 1 )
-		// 	currentState = BerryState.Squash;
+		// Auto squash
+		if( AUTO_SQUASH && Time.time - bornTime > 1 )
+			currentState = BerryState.Squash;
 	}
 
 	private void MoveExitState()
@@ -401,7 +402,7 @@ public class BerryBehaviour : MonoBehaviour
 
 		// When it arrives to the blender
 		// if( Time.time - toBlenderStartTime > 0.5f ){
-		if( transform.position.y < 8 ){
+		if( transform.position.y < BlenderBehaviour.instance.levelMarker.position.y ){
 			// BlenderBehaviour.liquidAmount += 1;
 			// currentState = BerryState.Idle;
 			currentState = BerryState.InBlender;
@@ -419,6 +420,9 @@ public class BerryBehaviour : MonoBehaviour
 	private void InBlenderEnterState()
 	{
 		DebugEnter( "InBlender" );
+
+		// Manage list of berries in blender
+		BlenderBehaviour.beriesInBlender.Add( this );
 	}
 
 	private void InBlenderState()
@@ -432,6 +436,9 @@ public class BerryBehaviour : MonoBehaviour
 	private void InBlenderExitState()
 	{
 		DebugExit( "InBlender" );
+
+		// Manage list of berries in blender
+		BlenderBehaviour.beriesInBlender.Remove( this );
 	}
 // EO IN BLENDER STATE //
 
