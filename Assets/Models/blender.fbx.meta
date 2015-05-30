@@ -26,6 +26,11 @@ ModelImporter:
     100036: Socket
     100038: Smoothie
     100040: Compartment.001
+    100042: Smoothie.001
+    100044: Smoothie.002
+    100046: Smoothie.003
+    100048: Smoothie.004
+    100050: Smoothie.000
     400000: //RootNode
     400002: Cube
     400004: Cylinder
@@ -47,6 +52,11 @@ ModelImporter:
     400036: Socket
     400038: Smoothie
     400040: Compartment.001
+    400042: Smoothie.001
+    400044: Smoothie.002
+    400046: Smoothie.003
+    400048: Smoothie.004
+    400050: Smoothie.000
     2300000: Cube
     2300002: Cylinder
     2300004: Cylinder.001
@@ -66,6 +76,11 @@ ModelImporter:
     2300032: Socket
     2300034: Smoothie
     2300036: Compartment.001
+    2300038: Smoothie.001
+    2300040: Smoothie.002
+    2300042: Smoothie.003
+    2300044: Smoothie.004
+    2300046: Smoothie.000
     3300000: Cube
     3300002: Cylinder
     3300004: Cylinder.001
@@ -85,6 +100,11 @@ ModelImporter:
     3300032: Socket
     3300034: Smoothie
     3300036: Compartment.001
+    3300038: Smoothie.001
+    3300040: Smoothie.002
+    3300042: Smoothie.003
+    3300044: Smoothie.004
+    3300046: Smoothie.000
     4300000: Cylinder.004
     4300002: Cube
     4300004: Cylinder.003
@@ -104,6 +124,11 @@ ModelImporter:
     4300032: Compartment
     4300034: Smoothie
     4300036: Compartment.001
+    4300038: Smoothie.002
+    4300040: Smoothie.001
+    4300042: Smoothie.003
+    4300044: Smoothie.004
+    4300046: Smoothie.000
     7400000: Cylinder.005|ButtonPress
     7400002: Cylinder.005|ButtonRelease
     7400004: Cylinder.004|ButtonPress
