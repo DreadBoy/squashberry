@@ -34,7 +34,6 @@ public class HighscoreList : MonoBehaviour
             using (var reader = new StreamReader(reponse.GetResponseStream()))
             {
                 String resText = reader.ReadToEnd();
-                Debug.Log(resText);
                 JSONObject res = new JSONObject(resText);
                 foreach (var s in res.list)
                     scores.Add(new Score() { name = s["name"].str, score = (int)s["score"].n });
