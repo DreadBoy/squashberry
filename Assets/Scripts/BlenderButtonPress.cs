@@ -20,6 +20,8 @@ public class BlenderButtonPress : MonoBehaviour
 					{
 						Blender.GetComponent<Animator>().SetTrigger("ButtonPress");
 						GetComponent<AudioSource>().Play();
+
+						BlenderBehaviour.instance.currentState = BlenderState.Blend;
 					}
 				}
 			}
