@@ -8,7 +8,7 @@ public class BlenderBehaviour : MonoBehaviour
 	public static BlenderBehaviour instance;
 
 	// System
-	public enum BlenderState{ Idle, Blend }
+	// public enum BlenderState{ Idle, Blend }
 	private BlenderState _state;
 	private Vector3 initPosition;
 	private static float _liquidAmount = 0;
@@ -44,7 +44,7 @@ public class BlenderBehaviour : MonoBehaviour
 		initPosition = transform.position;
 		currentState = BlenderState.Idle;
 		liquid = transform.Find("Liquid");
-		blades = transform.Find("Blades");
+		blades = transform.Find("Blade");
 		// liquid.gameObject.SetActive( false );
 
 		animator = GetComponent<Animator>();
@@ -178,10 +178,10 @@ public class BlenderBehaviour : MonoBehaviour
 
 		// Shake blender
 		float force = 0.3f;
-		// transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
+		transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
 
-		// Rotate blades
-		blades.transform.Rotate( Vector3.up * 20 );
+		// // Rotate blades
+		// blades.transform.Rotate( Vector3.up * 20 );
 
 		// Stop blending
 		if( Time.time - startBlendingTime > 3 ){
