@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour {
 	private void RunEnterState()
 	{
 		DebugEnter( "Run" );
-		// SpawnBerry();
+		SpawnBerry();
 	}
 
 	private void RunState()
@@ -152,8 +152,8 @@ public class GameManager : MonoBehaviour {
 	public void SpawnBerry()
 	{
 		if( BerryBehaviour.instances.Count < 50 ){
-			Instantiate( Resources.Load("Berry") );
-			// Invoke( "SpawnBerry", 1f );
+			Instantiate( Resources.Load("BlueBerry") );
+			Invoke( "SpawnBerry", 1f );
 		}
 	}
 //////////////////////////////////////////////////////////// EO OTHER METHODS //

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
-	private static bool FSM_DEBUG = true;
+	private static bool FSM_DEBUG = false;
 
 	// public Transform targetTransform;
 
@@ -24,6 +24,7 @@ public class BerryBehaviour : MonoBehaviour
 	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
 	private float bornTime;
 	private Animator animator;
+	private SkinnedMeshRenderer skinnedMeshRenderer;
 
 	private Vector3 position;
 	private Vector3 velocity;
@@ -43,11 +44,15 @@ public class BerryBehaviour : MonoBehaviour
 
 // UNITY METHODS ///////////////////////////////////////////////////////////////
 
+	public GameObject temp;
+
 	void Awake()
 	{
 		bornTime = Time.time;
 
 		animator = GetComponent<Animator>();
+		skinnedMeshRenderer = transform.Find("Berry").GetComponent<SkinnedMeshRenderer>();
+		// skinnedMeshRenderer = temp.GetComponent<SkinnedMeshRenderer>();
 
 		transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
 		position = transform.position;
@@ -267,12 +272,12 @@ public class BerryBehaviour : MonoBehaviour
 		squashTime = Time.time;
 
 		// Change view to squished
-		print("implement model to squished model transition");
 		animator.SetTrigger( "Idle" );
+		animator.SetTrigger( "Squash" );
 
 		// Spawn splash graphics
 		GameObject splash = Instantiate( Resources.Load("Splash") ) as GameObject;
-		splash.transform.position = transform.position + Vector3.up * 0.1f;
+		splash.transform.position = transform.position + Vector3.up * 0.01f;
 
 		// Turn off colliders
 		GetComponent<Collider>().enabled = false;
@@ -284,11 +289,13 @@ public class BerryBehaviour : MonoBehaviour
 
 		if( Time.time - squashTime > 1 )
 			currentState = BerryState.FromTable;
+
 	}
 
 	private void SquashExitState()
 	{
 		DebugExit( "Squash" );
+		animator.SetTrigger( "Idle" );
 	}
 // EO SQUASH STATE //
 
@@ -346,12 +353,12 @@ public class BerryBehaviour : MonoBehaviour
 		// // Move downwards
 		// transform.position -= Vector3.up * 2;
 
-		// // When it arrives to the blender
-		// // if( Time.time - toBlenderStartTime > 0.5f ){
-		// if( transform.position.y < 2 ){
-		// 	BlenderBehaviour.liquidAmount += 1;
-		// 	currentState = BerryState.Idle;
-		// }
+		// When it arrives to the blender
+		// if( Time.time - toBlenderStartTime > 0.5f ){
+		if( transform.position.y < 2 ){
+			// BlenderBehaviour.liquidAmount += 1;
+			currentState = BerryState.Idle;
+		}
 	}
 
 	private void ToBlenderExitState()
