@@ -8,35 +8,37 @@ public class BlenderBehaviour : MonoBehaviour
 	public static BlenderBehaviour instance;
 
 	// System
-	public enum BlenderState{ Idle, Blend }
+	public enum BlenderState { Idle, Blend }
 	private BlenderState _state;
 	private Vector3 initPosition;
 	private static float _liquidAmount = 0;
 	private static Transform liquid;
 	private static Transform blades;
 	// public static float liquidAmount = 0;
-	public static float liquidAmount {
-		get{ return _liquidAmount; }
-		set{
+	public static float liquidAmount
+	{
+		get { return _liquidAmount; }
+		set
+		{
 			_liquidAmount = value;
 
 			// Show liquid object if previously empty
-			if( !liquid.gameObject.gameObject.activeSelf )
-				liquid.gameObject.SetActive( true );
+			if (!liquid.gameObject.gameObject.activeSelf)
+				liquid.gameObject.SetActive(true);
 
-			if( liquidAmount <= 0 )
-				liquid.gameObject.SetActive( false );
+			if (liquidAmount <= 0)
+				liquid.gameObject.SetActive(false);
 
 
 			// Change view to match liquid amount
 			float scaleY = _liquidAmount * 0.1f;
-			liquid.localScale = new Vector3( 0.9f, scaleY, 0.9f );
-			liquid.position = new Vector3( liquid.position.x, liquidAmount/2 + 0.5f, liquid.position.z );
+			liquid.localScale = new Vector3(0.9f, scaleY, 0.9f);
+			liquid.position = new Vector3(liquid.position.x, liquidAmount / 2 + 0.5f, liquid.position.z);
 		}
 	}
 	private Animator animator;
 
-// UNITY METHODS ///////////////////////////////////////////////////////////////
+	// UNITY METHODS ///////////////////////////////////////////////////////////////
 
 	void Awake()
 	{
@@ -49,50 +51,51 @@ public class BlenderBehaviour : MonoBehaviour
 
 		animator = GetComponent<Animator>();
 	}
-	
-	void FixedUpdate ()
+
+	void FixedUpdate()
 	{
 		ExecuteState();
 	}
 
-    void OnMouseDown()
-    {
-        if( !EventSystem.current.IsPointerOverGameObject() )
-        {
-            // Destroy(gameObject);
-            currentState = BlenderState.Blend;
-        }
-    }
-//////////////////////////////////////////////////////////// EO UNITY METHODS //
+	void OnMouseDown()
+	{
+		if (!EventSystem.current.IsPointerOverGameObject())
+		{
+			// Destroy(gameObject);
+			currentState = BlenderState.Blend;
+		}
+	}
+	//////////////////////////////////////////////////////////// EO UNITY METHODS //
 
 
-// FSM MACHINE METHODS ////////////////////////////////////////////////////////
+	// FSM MACHINE METHODS ////////////////////////////////////////////////////////
 
 	// Set currentState to transition to new state
 	public BlenderState currentState
 	{
 		get { return _state; }
-		set {
+		set
+		{
 			// BlenderState should not transition to itself
-			if( _state != value )
+			if (_state != value)
 			{
 				// If current state is set,
 				// run exit state code
 				// if( _state != null )
-					ExitState( _state );
+				ExitState(_state);
 
 				// Set new current state value
 				_state = value;
 
 				// Run enter state code
-				EnterState( _state );
+				EnterState(_state);
 			}
 		}
 	}
 
-	private void EnterState( BlenderState state )
+	private void EnterState(BlenderState state)
 	{
-		switch( state )
+		switch (state)
 		{
 			case BlenderState.Idle:
 				IdleEnterState();
@@ -108,7 +111,7 @@ public class BlenderBehaviour : MonoBehaviour
 
 	private void ExecuteState()
 	{
-		switch( currentState )
+		switch (currentState)
 		{
 			case BlenderState.Idle:
 				IdleState();
@@ -122,9 +125,9 @@ public class BlenderBehaviour : MonoBehaviour
 		}
 	}
 
-	private void ExitState( BlenderState state )
+	private void ExitState(BlenderState state)
 	{
-		switch( state )
+		switch (state)
 		{
 			case BlenderState.Idle:
 				IdleExitState();
@@ -138,60 +141,61 @@ public class BlenderBehaviour : MonoBehaviour
 		}
 	}
 
-	private void DebugEnter  ( string state ){ if( FSM_DEBUG ) print( "BLENDER: \t-->( \t" + state + "\t )"     ); }
-	private void DebugExecute( string state ){ if( FSM_DEBUG ) print( "BLENDER: \t   ( \t" + state + "\t )"	    ); }
-	private void DebugExit   ( string state ){ if( FSM_DEBUG ) print( "BLENDER: \t   ( \t" + state + "\t )-->"  ); }
-//////////////////////////////////////////////////////// EO FSM MACHINE METHODS //
+	private void DebugEnter(string state) { if (FSM_DEBUG) print("BLENDER: \t-->( \t" + state + "\t )"); }
+	private void DebugExecute(string state) { if (FSM_DEBUG) print("BLENDER: \t   ( \t" + state + "\t )"); }
+	private void DebugExit(string state) { if (FSM_DEBUG) print("BLENDER: \t   ( \t" + state + "\t )-->"); }
+	//////////////////////////////////////////////////////// EO FSM MACHINE METHODS //
 
 
-// STATE METHODS ////////////////////////////////////////////////////////
+	// STATE METHODS ////////////////////////////////////////////////////////
 
-// IDLE STATE //
+	// IDLE STATE //
 	private void IdleEnterState()
 	{
-		DebugEnter( "Idle" );
+		DebugEnter("Idle");
 	}
 
 	private void IdleState()
 	{
-		DebugExecute( "Idle" );
+		DebugExecute("Idle");
 	}
 
 	private void IdleExitState()
 	{
-		DebugExit( "Idle" );
+		DebugExit("Idle");
 	}
-// EO IDLE STATE //
+	// EO IDLE STATE //
 
-// BLEND STATE //
+	// BLEND STATE //
 	private float startBlendingTime;
 
 	private void BlendEnterState()
 	{
-		DebugEnter( "Blend" );
+		DebugEnter("Blend");
 		startBlendingTime = Time.time;
 	}
 
 	private void BlendState()
 	{
-		DebugExecute( "Blend" );
+		DebugExecute("Blend");
 
 		// Shake blender
 		float force = 0.3f;
 		// transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
 
 		// Rotate blades
-		blades.transform.Rotate( Vector3.up * 20 );
+		blades.transform.Rotate(Vector3.up * 20);
 
 		// Stop blending
-		if( Time.time - startBlendingTime > 3 ){
+		if (Time.time - startBlendingTime > 3)
+		{
 			currentState = BlenderState.Idle;
 		}
 	}
 
 	private void BlendExitState()
 	{
-		DebugExit( "Blend" );
+		DebugExit("Blend");
 
 		// Reset position
 		transform.position = initPosition;
@@ -199,5 +203,5 @@ public class BlenderBehaviour : MonoBehaviour
 		// Empty blender
 		// liquidAmount = 0;
 	}
-// EO BLEND STATE //
+	// EO BLEND STATE //
 }

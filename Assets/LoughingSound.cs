@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LoughingSound : MonoBehaviour {
+public class LoughingSound : MonoBehaviour
+{
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start()
+	{
+		StartCoroutine("laughing");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	IEnumerator laughing()
+	{
+		yield return new WaitForSeconds(Random.Range(3, 6));
+
+		GetComponent<AudioSource>().Play();
 	}
 }
