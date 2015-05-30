@@ -21,7 +21,8 @@ public class BerryBehaviour : MonoBehaviour
 	// System
 	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, Die }
 	private BerryState _state;
-	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
+	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
+	private float bornTime;
 
 	private Vector3 position;
 	private Vector3 velocity;
@@ -31,11 +32,11 @@ public class BerryBehaviour : MonoBehaviour
 // INSTANCES LIST ///////////////////////////////////////////////////////////////
 	void OnEnable()
 	{
-		berries.Add( this );
+		instances.Add( this );
 	}
 	void OnDisable()
 	{
-		berries.Remove( this );
+		instances.Remove( this );
 	}
 //////////////////////////////////////////////////////////// EO INSTANCES LIST //
 
@@ -43,9 +44,13 @@ public class BerryBehaviour : MonoBehaviour
 
 	void Awake()
 	{
+		bornTime = Time.time;
+
 		transform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-		target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
 		position = transform.position;
+
+		target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
 	}
@@ -210,7 +215,7 @@ public class BerryBehaviour : MonoBehaviour
 		// Vector3 target = targetTransform.position;
 		if( (target - position).magnitude < 1 ){
 			// targetTransform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-			target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+			target = new Vector3( Random.Range( 0,10 ), 0.5f, Random.Range( 0,10 ) );
 		}
 
 		// STEERING ///////////////////////////////////////////////////////////////
@@ -235,12 +240,15 @@ public class BerryBehaviour : MonoBehaviour
 
 		// Apply position
 		transform.position = position;
+
+		// // Auto squish
+		// if( Time.time - bornTime > 1 )
+		// 	currentState = BerryState.Squash;
 	}
 
 	private void MoveExitState()
 	{
 		DebugExit( "Move" );
-		// if( FSM_DEBUG ) print("FSM -> MoveExitState");
 	}
 // EO MOVE STATE //
 
@@ -316,22 +324,28 @@ public class BerryBehaviour : MonoBehaviour
 		toBlenderStartTime = Time.time;
 
 		// Put it to starting position
-		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 10;
+		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 10 + Quaternion.Euler(0, -Random.Range(0,360), 0) * Vector3.right * 1;
+
+
+		// Turn on colliders
+		GetComponent<Collider>().enabled = true;
+		transform.GetComponent<Rigidbody>().isKinematic = false; 
 	}
 
 	private void ToBlenderState()
 	{
 		DebugExecute( "ToBlender" );
 
-		// Move downwards
-		transform.position -= Vector3.up * 2;
 
-		// When it arrives to the blender
-		// if( Time.time - toBlenderStartTime > 0.5f ){
-		if( transform.position.y < 2 ){
-			BlenderBehaviour.liquidAmount += 1;
-			currentState = BerryState.Idle;
-		}
+		// // Move downwards
+		// transform.position -= Vector3.up * 2;
+
+		// // When it arrives to the blender
+		// // if( Time.time - toBlenderStartTime > 0.5f ){
+		// if( transform.position.y < 2 ){
+		// 	BlenderBehaviour.liquidAmount += 1;
+		// 	currentState = BerryState.Idle;
+		// }
 	}
 
 	private void ToBlenderExitState()

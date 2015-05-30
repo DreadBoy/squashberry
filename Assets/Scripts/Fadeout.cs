@@ -23,7 +23,7 @@ public class Fadeout : MonoBehaviour {
 
 			// Destroy
 			if( opacity <= 0.5f ){
-				Destroy( this );
+				Destroy( gameObject );
 			}
 		}
 	}
