@@ -1,0 +1,294 @@
+fileFormatVersion: 2
+guid: 9046bcbae957c2e4794a9524b61b1bd7
+timeCreated: 1432976761
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cube
+    100004: Cylinder
+    100006: Cylinder.001
+    100008: Cylinder.002
+    100010: Cylinder.003
+    100012: Cylinder.004
+    100014: Cylinder.005
+    100016: Empty
+    100018: Cylinder_001
+    100020: Cylinder_002
+    100022: Cylinder_003
+    100024: Cylinder_004
+    100026: Cylinder_005
+    100028: Cylinder.000
+    100030: Blade
+    100032: Button
+    100034: Compartment
+    100036: Socket
+    100038: Smoothie
+    400000: //RootNode
+    400002: Cube
+    400004: Cylinder
+    400006: Cylinder.001
+    400008: Cylinder.002
+    400010: Cylinder.003
+    400012: Cylinder.004
+    400014: Cylinder.005
+    400016: Empty
+    400018: Cylinder_001
+    400020: Cylinder_002
+    400022: Cylinder_003
+    400024: Cylinder_004
+    400026: Cylinder_005
+    400028: Cylinder.000
+    400030: Blade
+    400032: Button
+    400034: Compartment
+    400036: Socket
+    400038: Smoothie
+    2300000: Cube
+    2300002: Cylinder
+    2300004: Cylinder.001
+    2300006: Cylinder.002
+    2300008: Cylinder.003
+    2300010: Cylinder.004
+    2300012: Cylinder.005
+    2300014: Cylinder_001
+    2300016: Cylinder_002
+    2300018: Cylinder_003
+    2300020: Cylinder_004
+    2300022: Cylinder_005
+    2300024: Cylinder.000
+    2300026: Blade
+    2300028: Button
+    2300030: Compartment
+    2300032: Socket
+    2300034: Smoothie
+    3300000: Cube
+    3300002: Cylinder
+    3300004: Cylinder.001
+    3300006: Cylinder.002
+    3300008: Cylinder.003
+    3300010: Cylinder.004
+    3300012: Cylinder.005
+    3300014: Cylinder_001
+    3300016: Cylinder_002
+    3300018: Cylinder_003
+    3300020: Cylinder_004
+    3300022: Cylinder_005
+    3300024: Cylinder.000
+    3300026: Blade
+    3300028: Button
+    3300030: Compartment
+    3300032: Socket
+    3300034: Smoothie
+    4300000: Cylinder.004
+    4300002: Cube
+    4300004: Cylinder.003
+    4300006: Cylinder.002
+    4300008: Cylinder.001
+    4300010: Cylinder
+    4300012: Cylinder.005
+    4300014: Cylinder_005
+    4300016: Cylinder_004
+    4300018: Cylinder_003
+    4300020: Cylinder_002
+    4300022: Cylinder_001
+    4300024: Cylinder.000
+    4300026: Button
+    4300028: Socket
+    4300030: Blade
+    4300032: Compartment
+    4300034: Smoothie
+    7400000: Cylinder.005|ButtonPress
+    7400002: Cylinder.005|ButtonRelease
+    7400004: Cylinder.004|ButtonPress
+    7400006: Cylinder.004|ButtonRelease
+    7400008: Cylinder.003|ButtonPress
+    7400010: Cylinder.003|ButtonRelease
+    7400012: Cylinder.002|ButtonPress
+    7400014: Cylinder.002|ButtonRelease
+    7400016: Cylinder.001|ButtonPress
+    7400018: Cylinder.001|ButtonRelease
+    7400020: Empty|ButtonPress
+    7400022: Empty|ButtonRelease
+    7400024: Cylinder.005|Cylinder.004Action
+    7400026: Cylinder.005|Key.001Action
+    7400028: Cylinder.004|Cylinder.004Action
+    7400030: Cylinder.004|Key.001Action
+    7400032: Cylinder.003|Cylinder.004Action
+    7400034: Cylinder.003|Key.001Action
+    7400036: Cylinder.002|Cylinder.004Action
+    7400038: Cylinder.002|Key.001Action
+    7400040: Cylinder.001|Cylinder.004Action
+    7400042: Cylinder.001|Key.001Action
+    7400044: Default Take
+    7400046: Cylinder.005|Cylinder.001Action
+    7400048: Cylinder.005|Cylinder.002Action
+    7400050: Cylinder.005|Cylinder.003Action
+    7400052: Cylinder.005|Cylinder.005Action
+    7400054: Cylinder.005|Key.001Action.001
+    7400056: Cylinder.004|Cylinder.001Action
+    7400058: Cylinder.004|Cylinder.002Action
+    7400060: Cylinder.004|Cylinder.003Action
+    7400062: Cylinder.004|Cylinder.005Action
+    7400064: Cylinder.004|Key.001Action.001
+    7400066: Cylinder.003|Cylinder.001Action
+    7400068: Cylinder.003|Cylinder.002Action
+    7400070: Cylinder.003|Cylinder.003Action
+    7400072: Cylinder.003|Cylinder.005Action
+    7400074: Cylinder.003|Key.001Action.001
+    7400076: Cylinder.002|Cylinder.001Action
+    7400078: Cylinder.002|Cylinder.002Action
+    7400080: Cylinder.002|Cylinder.003Action
+    7400082: Cylinder.002|Cylinder.005Action
+    7400084: Cylinder.002|Key.001Action.001
+    7400086: Cylinder.001|Cylinder.001Action
+    7400088: Cylinder.001|Cylinder.002Action
+    7400090: Cylinder.001|Cylinder.003Action
+    7400092: Cylinder.001|Cylinder.005Action
+    7400094: Cylinder.001|Key.001Action.001
+    7400096: Cylinder.000|Cylinder.000Action
+    7400098: Cylinder.005|Cylinder.000Action
+    7400100: Cylinder.004|Cylinder.000Action
+    7400102: Cylinder.003|Cylinder.000Action
+    7400104: Cylinder.002|Cylinder.000Action
+    7400106: Cylinder.001|Cylinder.000Action
+    7400108: ButtonPress
+    7400110: ButtonRelease
+    7400112: Button|ButtonPress
+    7400114: Smoothie|ButtonRelease
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Button|ButtonPress
+      takeName: Button|ButtonPress
+      firstFrame: 0
+      lastFrame: 4
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blade
+        weight: 1
+      - path: Button
+        weight: 1
+      - path: Compartment
+        weight: 1
+      - path: Smoothie
+        weight: 1
+      - path: Socket
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Smoothie|ButtonRelease
+      takeName: Smoothie|ButtonRelease
+      firstFrame: 0
+      lastFrame: 4
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Blade
+        weight: 1
+      - path: Button
+        weight: 1
+      - path: Compartment
+        weight: 1
+      - path: Smoothie
+        weight: 1
+      - path: Socket
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
