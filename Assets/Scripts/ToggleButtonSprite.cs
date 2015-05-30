@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 
+[RequireComponent(typeof(Button))]
 public class ToggleButtonSprite : MonoBehaviour
 {
 

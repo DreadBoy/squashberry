@@ -10,10 +10,14 @@ public class ButtonClickSFX : MonoBehaviour
 
     void Start()
     {
+        GetComponent<Button>().onClick.AddListener(() => { OnClick(); });
+    }
+
+    void Awake()
+    {
         SFX = GetComponent<AudioSource>();
         if (SFX != null)
             SFX.playOnAwake = false;
-        GetComponent<Button>().onClick.AddListener(() => { OnClick(); });
     }
 
 

@@ -16,7 +16,7 @@ public class Settings : MonoBehaviour
 
     public static SaveData saveData = new SaveData();
 
-    void Start()
+    void Awake()
     {
         loadPlayerPrefs();
     }
