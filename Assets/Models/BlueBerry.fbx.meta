@@ -13,6 +13,7 @@ ModelImporter:
     100010: Armature
     100012: Bone
     100014: Bone_end
+    100016: Bone_end_end
     400000: //RootNode
     400002: Empty
     400004: Sphere
@@ -21,6 +22,7 @@ ModelImporter:
     400010: Armature
     400012: Bone
     400014: Bone_end
+    400016: Bone_end_end
     4300000: Sphere
     4300002: Berry
     7400000: Empty|EmptyAction
@@ -36,6 +38,7 @@ ModelImporter:
     7400020: Ref|Jump
     7400022: Berry|Jump
     7400024: Jump
+    7400026: Jump
     9500000: //RootNode
     13700000: Sphere
     13700002: Berry
@@ -57,11 +60,11 @@ ModelImporter:
     clipAnimations:
     - serializedVersion: 16
       name: Jump
-      takeName: Armature|Jump
+      takeName: Armature|Armature|Armature|Jump|Armature|Jump
       firstFrame: 0
       lastFrame: 12
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 90
       level: 0
       cycleOffset: 0
       loop: 0
@@ -86,6 +89,8 @@ ModelImporter:
       - path: Armature/Bone
         weight: 1
       - path: Armature/Bone/Bone_end
+        weight: 1
+      - path: Armature/Bone/Bone_end/Bone_end_end
         weight: 1
       - path: Berry
         weight: 1
@@ -128,7 +133,7 @@ ModelImporter:
     armStretch: .0500000007
     legStretch: .0500000007
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: Armature
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   additionalBone: 0
