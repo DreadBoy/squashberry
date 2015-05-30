@@ -19,7 +19,7 @@ public class BerryBehaviour : MonoBehaviour
 	public float maxForce;
 
 	// System
-	public enum BerryState { Idle, Move, Squash, Die }
+	public enum BerryState { Idle, Move, Squash, FromTable, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
 
@@ -105,6 +105,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Squash:
 				SquashEnterState();
 				break;
+			case BerryState.FromTable:
+				FromTableEnterState();
+				break;
 			// case BerryState.Die:
 			// 	DieEnterState();
 			// 	break;
@@ -124,6 +127,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Squash:
 				SquashState();
 				break;
+			case BerryState.FromTable:
+				FromTableState();
+				break;
 			// case BerryState.Die:
 			// 	DieState();
 			// 	break;
@@ -142,6 +148,9 @@ public class BerryBehaviour : MonoBehaviour
 				break;
 			case BerryState.Squash:
 				SquashExitState();
+				break;
+			case BerryState.FromTable:
+				FromTableExitState();
 				break;
 			// case BerryState.Die:
 			// 	DieExitState();
@@ -226,32 +235,64 @@ public class BerryBehaviour : MonoBehaviour
 	}
 // EO MOVE STATE //
 
-// IDLE STATE //
+// SQUASH STATE //
 	private float squashTime;
 	private void SquashEnterState()
 	{
 		DebugEnter( "Squash" );
 
+		// Set timer
 		squashTime = Time.time;
 
+		// Change view to squished
+		print("implement model to squished model transition");
+
+		// Spawn splash graphics
 		GameObject splash = Instantiate( Resources.Load("Splash") ) as GameObject;
 		splash.transform.position = transform.position - Vector3.up * 0.4f;
+
+		// Turn off colliders
+		GetComponent<Collider>().enabled = false;
 	}
 
 	private void SquashState()
 	{
 		DebugExecute( "Squash" );
 
-		// if( Time.time - squashTime > 1 )
-		// 	currentState = BerryState.FromTable;
+		if( Time.time - squashTime > 1 )
+			currentState = BerryState.FromTable;
 	}
 
 	private void SquashExitState()
 	{
-		DebugExit( "Idle" );
+		DebugExit( "Squash" );
 	}
-// EO IDLE STATE //
+// EO SQUASH STATE //
 
+// FROM TABLE STATE //
+	private void FromTableEnterState()
+	{
+		DebugEnter( "FromTable" );
+	}
+
+	private void FromTableState()
+	{
+		DebugExecute( "FromTable" );
+
+		transform.position += Vector3.up * 3;
+
+		// GetComponent<Renderer>().material.color = color * new Vector4(1,1,1,opacity);
+
+		// if( Time.time > 0 )
+		// 	currentState = BerryState.Move;
+	}
+
+	private void FromTableExitState()
+	{
+		DebugExit( "FromTable" );
+	}
+// EO FROM TABLE STATE //
+// 
 // STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
 	private Vector3 desiredVelocity;
 

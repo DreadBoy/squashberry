@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnBerry()
 	{
 		Instantiate( Resources.Load("Berry") );
-		// Invoke( "SpawnBerry", 3 );
+		Invoke( "SpawnBerry", 1 );
 	}
 //////////////////////////////////////////////////////////// EO OTHER METHODS //
 }
