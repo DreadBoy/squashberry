@@ -314,6 +314,8 @@ public class BerryBehaviour : MonoBehaviour
 
 		// Turn off colliders
 		GameObject.Find("Bone").gameObject.GetComponent<SphereCollider>().enabled = false;
+
+		GetComponent<AudioSource>().Play();
 	}
 
 	private void SquashState()

@@ -15,14 +15,20 @@ public class TableSound : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
+			Debug.Log("Mouse Down");
+
 			Ray ray;
 			RaycastHit hit;
 
 			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out hit))
 			{
-				if (hit.collider.gameObject == this)
+				Debug.Log("Raycast");
+
+				if (hit.collider.gameObject.name == "Table")
 				{
+					Debug.Log("Table hit");
+
 					GetComponent<AudioSource>().Play();
 				}
 

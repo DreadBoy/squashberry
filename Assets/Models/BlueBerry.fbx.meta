@@ -80,7 +80,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .171755731
+        functionName: PlayJumpSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 5f85ecf4b08f67e4c84c113eafa8e9d9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
