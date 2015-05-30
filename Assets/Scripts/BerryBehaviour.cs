@@ -7,16 +7,25 @@ using UnityEngine.EventSystems;
 public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
-	private static bool FSM_DEBUG = true;
+	private static bool FSM_DEBUG = false;
+
+	public Transform targetTransform;
 
 	// Handling
+	public float acceleration;
+	public float maxVelocity;
+	public float rotationSpeed;
+	public float mass;
+	public float maxForce;
 
 	// System
 	public enum BerryState { Idle, Move, Die }
-	public enum ControlMode { Manual, AI }
 	private BerryState _state;
-	public ControlMode controlMode;
 	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
+
+	private Vector3 position;
+	private Vector3 velocity;
+	private Vector3 steering;
 
 
 // INSTANCES LIST ///////////////////////////////////////////////////////////////
@@ -36,21 +45,12 @@ public class BerryBehaviour : MonoBehaviour
 	{
 		_state = BerryState.Move;
 		position = transform.position;
-		velocity = Vector3.zero;
+		velocity = Vector3.forward;
 	}
 	
 	void FixedUpdate ()
 	{
 		ExecuteState();
-	}
-
-	void Update()
-	{
-		switch( controlMode )
-		{
-			case ControlMode.Manual: rotationInput = ManualControl(); break;
-			case ControlMode.AI: rotationInput = AIControl(); break;
-		}
 	}
 
     void OnMouseDown()
@@ -170,9 +170,32 @@ public class BerryBehaviour : MonoBehaviour
 		DebugEnter( "Move" );
 	}
 
+	private Vector3 desiredVelocity;
 	private void MoveState()
 	{
 		DebugExecute( "Move" );
+
+		Vector3 target = targetTransform.position;
+
+		// STEERING ///////////////////////////////////////////////////////////////
+		// Euler integration
+		position = position + velocity;
+
+		// Calculating forces
+		desiredVelocity = (target - position).normalized * maxVelocity;
+		steering = desiredVelocity - velocity;
+
+		// Adding forces
+		steering = Vector3.ClampMagnitude( steering, maxForce );
+		steering = steering / mass;
+
+		// velocity = Vector3.ClampMagnitude( velocity + steering , maxSpeed );
+		velocity = Vector3.ClampMagnitude( velocity + steering , maxVelocity );
+		position = position + velocity;
+		//////////////////////////////////////////////////////////// EO STEERING //
+
+		// Apply position
+		transform.position = position;
 	}
 
 	private void MoveExitState()
@@ -181,15 +204,4 @@ public class BerryBehaviour : MonoBehaviour
 		// if( FSM_DEBUG ) print("FSM -> MoveExitState");
 	}
 // EO MOVE STATE //
-
-// CONTROLS ///////////////////////////////////////////////////////////////
-	private float ManualControl()
-	{
-		return Input.GetAxis("Horizontal");
-	}
-	private float AIControl()
-	{
-		return Random.Range(-1,1);
-	}
-//////////////////////////////////////////////////////////// EO CONTROLS //
 }
