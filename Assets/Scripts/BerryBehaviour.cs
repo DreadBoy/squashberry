@@ -194,6 +194,11 @@ public class BerryBehaviour : MonoBehaviour
 		position = position + velocity;
 		//////////////////////////////////////////////////////////// EO STEERING //
 
+		// DEBUG ///////////////////////////////////////////////////////////////
+		Debug.DrawRay( transform.position, velocity.normalized * 2, Color.green );
+		Debug.DrawRay( transform.position, steering.normalized * 2, Color.blue );
+		//////////////////////////////////////////////////////////// EO DEBUG //
+
 		// Apply position
 		transform.position = position;
 	}
