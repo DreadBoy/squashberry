@@ -157,6 +157,8 @@ ModelImporter:
     7400110: ButtonRelease
     7400112: Button|ButtonPress
     7400114: Smoothie|ButtonRelease
+    7400116: Button|ButtonRelease
+    7400118: Smoothie|ButtonPress
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -175,8 +177,8 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Button|ButtonPress
-      takeName: Button|ButtonPress
+      name: Button|ButtonRelease
+      takeName: Button|ButtonRelease
       firstFrame: 0
       lastFrame: 4
       wrapMode: 0
@@ -213,8 +215,8 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: Smoothie|ButtonRelease
-      takeName: Smoothie|ButtonRelease
+      name: Button|ButtonPress
+      takeName: Button|ButtonPress
       firstFrame: 0
       lastFrame: 4
       wrapMode: 0
