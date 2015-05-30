@@ -18,7 +18,7 @@ public class BerryBehaviour : MonoBehaviour
 	public float maxForce;
 
 	// System
-	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, Die }
+	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, InBlender, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
 	private float bornTime;
@@ -55,10 +55,13 @@ public class BerryBehaviour : MonoBehaviour
 		skinnedMeshRenderer = transform.Find("Berry").GetComponent<SkinnedMeshRenderer>();
 		// skinnedMeshRenderer = temp.GetComponent<SkinnedMeshRenderer>();
 
-		// transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
-		// position = transform.position;
+		// Randomly position
+		transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
+		position = transform.position;
 
+		// Get another random position
 		target = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
+
 
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
@@ -125,6 +128,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.ToBlender:
 				ToBlenderEnterState();
 				break;
+			case BerryState.InBlender:
+				InBlenderEnterState();
+				break;
 			// case BerryState.Die:
 			// 	DieEnterState();
 			// 	break;
@@ -150,6 +156,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.ToBlender:
 				ToBlenderState();
 				break;
+			case BerryState.InBlender:
+				InBlenderState();
+				break;
 			// case BerryState.Die:
 			// 	DieState();
 			// 	break;
@@ -174,6 +183,9 @@ public class BerryBehaviour : MonoBehaviour
 				break;
 			case BerryState.ToBlender:
 				ToBlenderExitState();
+				break;
+			case BerryState.InBlender:
+				InBlenderExitState();
 				break;
 			// case BerryState.Die:
 			// 	DieExitState();
@@ -209,7 +221,6 @@ public class BerryBehaviour : MonoBehaviour
 	}
 // EO IDLE STATE //
 
-
 // MOVE STATE //
 	private int currentCornerId = 0;
 
@@ -229,35 +240,36 @@ public class BerryBehaviour : MonoBehaviour
 	{
 		DebugExecute( "Move" );
 
-		// print( "path.corners.Length: " + path.corners.Length );
-		// print( "currentCornerId: " + currentCornerId );
-
-		if( currentCornerId >= path.corners.Length ){
-			GeneratePath( Vector3.zero, true );
-			currentCornerId = 0;
-		}
-		target = path.corners[ currentCornerId ];
-
-
-		// print( "(target-transform.position).magnitude: " + (target-transform.position).magnitude );
-		// Vector3 target = targetTransform.position;
-		if( (target - transform.position).magnitude < 0.3f ){
-			currentCornerId++;
+		// Get new random target position
+		if( (target - position).magnitude < 1 ){
+			target = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
 		}
 
-		// Debug.DrawLine( transform.position, target, Color.red );
+		// // Generate new path if necessary
+		// if( currentCornerId >= path.corners.Length ){
+		// 	GeneratePath( Vector3.zero, true );
+		// 	currentCornerId = 0;
+		// }
 
+		// // Get current point on the path
+		// target = path.corners[ currentCornerId ];
 
-		if( path != null && path.corners.Length > 0 )
-		{
-			Vector3 prevCorner = path.corners[0];
-			for( int i = 1; i < path.corners.Length; i++ )
-			{
-				Vector3	corner = path.corners[i];
-				Debug.DrawLine( prevCorner, corner, Color.red );
-				prevCorner = corner;
-			}
-		}
+		// // Get id of the next point on the path
+		// if( (target - transform.position).magnitude < 0.3f ){
+		// 	currentCornerId++;
+		// }
+
+		// // Draw Path
+		// if( path != null && path.corners.Length > 0 )
+		// {
+		// 	Vector3 prevCorner = path.corners[0];
+		// 	for( int i = 1; i < path.corners.Length; i++ )
+		// 	{
+		// 		Vector3	corner = path.corners[i];
+		// 		Debug.DrawLine( prevCorner, corner, Color.red );
+		// 		prevCorner = corner;
+		// 	}
+		// }
 
 		// STEERING ///////////////////////////////////////////////////////////////
 
@@ -285,7 +297,7 @@ public class BerryBehaviour : MonoBehaviour
 		// Rotate towards directions
 		transform.rotation = Quaternion.LookRotation( velocity );
 
-		// // Auto squish
+		// // Auto squash
 		// if( Time.time - bornTime > 1 )
 		// 	currentState = BerryState.Squash;
 	}
@@ -389,9 +401,10 @@ public class BerryBehaviour : MonoBehaviour
 
 		// When it arrives to the blender
 		// if( Time.time - toBlenderStartTime > 0.5f ){
-		if( transform.position.y < 2 ){
+		if( transform.position.y < 8 ){
 			// BlenderBehaviour.liquidAmount += 1;
-			currentState = BerryState.Idle;
+			// currentState = BerryState.Idle;
+			currentState = BerryState.InBlender;
 		}
 	}
 
@@ -400,6 +413,27 @@ public class BerryBehaviour : MonoBehaviour
 		DebugExit( "ToBlender" );
 	}
 // EO TO BLENDER STATE //
+
+
+// IN BLENDER STATE //
+	private void InBlenderEnterState()
+	{
+		DebugEnter( "InBlender" );
+	}
+
+	private void InBlenderState()
+	{
+		DebugExecute( "InBlender" );
+
+		if( Random.value > 0.999f )
+			GetComponent<Rigidbody>().AddForce( Vector3.up * Random.Range( 300, 500 ) );
+	}
+
+	private void InBlenderExitState()
+	{
+		DebugExit( "InBlender" );
+	}
+// EO IN BLENDER STATE //
 
 // STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
 	private Vector3 desiredVelocity;
