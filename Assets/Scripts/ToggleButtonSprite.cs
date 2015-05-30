@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(Button))]
 public class ToggleButtonSprite : MonoBehaviour
 {
+
+
     private Button button;
     [SerializeField]
     private Sprite altSprite;

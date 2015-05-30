@@ -151,8 +151,11 @@ public class GameManager : MonoBehaviour {
 // OTHER METHODS ///////////////////////////////////////////////////////////////
 	public void SpawnBerry()
 	{
-		Instantiate( Resources.Load("Berry") );
-		// Invoke( "SpawnBerry", 3 );
+		if (BerryBehaviour.instances.Count < 50)
+		{
+			Instantiate(Resources.Load("BlueBerry"));
+			Invoke("SpawnBerry", Random.Range(1f, 2f));
+		}
 	}
 //////////////////////////////////////////////////////////// EO OTHER METHODS //
 }

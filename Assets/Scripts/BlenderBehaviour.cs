@@ -2,10 +2,10 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider))]
 public class BlenderBehaviour : MonoBehaviour
 {
 	private static bool FSM_DEBUG = false;
+	public static BlenderBehaviour instance;
 
 	// System
 	public enum BlenderState{ Idle, Blend }
@@ -13,6 +13,7 @@ public class BlenderBehaviour : MonoBehaviour
 	private Vector3 initPosition;
 	private static float _liquidAmount = 0;
 	private static Transform liquid;
+	private static Transform blades;
 	// public static float liquidAmount = 0;
 	public static float liquidAmount {
 		get{ return _liquidAmount; }
@@ -33,15 +34,20 @@ public class BlenderBehaviour : MonoBehaviour
 			liquid.position = new Vector3( liquid.position.x, liquidAmount/2 + 0.5f, liquid.position.z );
 		}
 	}
+	private Animator animator;
 
 // UNITY METHODS ///////////////////////////////////////////////////////////////
 
 	void Awake()
 	{
+		instance = this;
 		initPosition = transform.position;
 		currentState = BlenderState.Idle;
 		liquid = transform.Find("Liquid");
-		liquid.gameObject.SetActive( false );
+		blades = transform.Find("Blades");
+		// liquid.gameObject.SetActive( false );
+
+		animator = GetComponent<Animator>();
 	}
 	
 	void FixedUpdate ()
@@ -170,19 +176,28 @@ public class BlenderBehaviour : MonoBehaviour
 	{
 		DebugExecute( "Blend" );
 
+		// Shake blender
 		float force = 0.3f;
-		transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
+		// transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
 
-		if( Time.time - startBlendingTime > 1 )
+		// Rotate blades
+		blades.transform.Rotate( Vector3.up * 20 );
+
+		// Stop blending
+		if( Time.time - startBlendingTime > 3 ){
 			currentState = BlenderState.Idle;
+		}
 	}
 
 	private void BlendExitState()
 	{
 		DebugExit( "Blend" );
 
+		// Reset position
 		transform.position = initPosition;
-		liquidAmount = 0;
+
+		// Empty blender
+		// liquidAmount = 0;
 	}
 // EO BLEND STATE //
 }

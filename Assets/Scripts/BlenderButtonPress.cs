@@ -19,6 +19,7 @@ public class BlenderButtonPress : MonoBehaviour
 					if (hit.collider.gameObject.name == "Button")
 					{
 						Blender.GetComponent<Animator>().SetTrigger("ButtonPress");
+						GetComponent<AudioSource>().Play();
 					}
 				}
 			}

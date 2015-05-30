@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider))]
 public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
@@ -19,9 +18,13 @@ public class BerryBehaviour : MonoBehaviour
 	public float maxForce;
 
 	// System
-	public enum BerryState { Idle, Move, Squash, Die }
+	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, Die }
 	private BerryState _state;
-	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
+	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
+	private float bornTime;
+	private Animator animator;
+	private SkinnedMeshRenderer skinnedMeshRenderer;
+	private NavMeshPath path;
 
 	private Vector3 position;
 	private Vector3 velocity;
@@ -31,11 +34,11 @@ public class BerryBehaviour : MonoBehaviour
 // INSTANCES LIST ///////////////////////////////////////////////////////////////
 	void OnEnable()
 	{
-		berries.Add( this );
+		instances.Add( this );
 	}
 	void OnDisable()
 	{
-		berries.Remove( this );
+		instances.Remove( this );
 	}
 //////////////////////////////////////////////////////////// EO INSTANCES LIST //
 
@@ -43,9 +46,20 @@ public class BerryBehaviour : MonoBehaviour
 
 	void Awake()
 	{
-		transform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-		target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-		position = transform.position;
+		path = new NavMeshPath();
+		GeneratePath( Vector3.zero, true );
+
+		bornTime = Time.time;
+
+		animator = GetComponent<Animator>();
+		skinnedMeshRenderer = transform.Find("Berry").GetComponent<SkinnedMeshRenderer>();
+		// skinnedMeshRenderer = temp.GetComponent<SkinnedMeshRenderer>();
+
+		// transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
+		// position = transform.position;
+
+		target = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
+
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
 	}
@@ -105,6 +119,12 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Squash:
 				SquashEnterState();
 				break;
+			case BerryState.FromTable:
+				FromTableEnterState();
+				break;
+			case BerryState.ToBlender:
+				ToBlenderEnterState();
+				break;
 			// case BerryState.Die:
 			// 	DieEnterState();
 			// 	break;
@@ -124,6 +144,12 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.Squash:
 				SquashState();
 				break;
+			case BerryState.FromTable:
+				FromTableState();
+				break;
+			case BerryState.ToBlender:
+				ToBlenderState();
+				break;
 			// case BerryState.Die:
 			// 	DieState();
 			// 	break;
@@ -142,6 +168,12 @@ public class BerryBehaviour : MonoBehaviour
 				break;
 			case BerryState.Squash:
 				SquashExitState();
+				break;
+			case BerryState.FromTable:
+				FromTableExitState();
+				break;
+			case BerryState.ToBlender:
+				ToBlenderExitState();
 				break;
 			// case BerryState.Die:
 			// 	DieExitState();
@@ -177,22 +209,54 @@ public class BerryBehaviour : MonoBehaviour
 	}
 // EO IDLE STATE //
 
+
 // MOVE STATE //
+	private int currentCornerId = 0;
+
 	private void MoveEnterState()
 	{
 		DebugEnter( "Move" );
+
+		animator.SetTrigger( "Jumping" );
+
+		GeneratePath( Vector3.right * 10, true );
 	}
 
 	private Vector3 target;
+
 
 	private void MoveState()
 	{
 		DebugExecute( "Move" );
 
+		// print( "path.corners.Length: " + path.corners.Length );
+		// print( "currentCornerId: " + currentCornerId );
+
+		if( currentCornerId >= path.corners.Length ){
+			GeneratePath( Vector3.zero, true );
+			currentCornerId = 0;
+		}
+		target = path.corners[ currentCornerId ];
+
+
+		// print( "(target-transform.position).magnitude: " + (target-transform.position).magnitude );
 		// Vector3 target = targetTransform.position;
-		if( (target - position).magnitude < 1 ){
-			// targetTransform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
-			target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+		if( (target - transform.position).magnitude < 0.3f ){
+			currentCornerId++;
+		}
+
+		// Debug.DrawLine( transform.position, target, Color.red );
+
+
+		if( path != null && path.corners.Length > 0 )
+		{
+			Vector3 prevCorner = path.corners[0];
+			for( int i = 1; i < path.corners.Length; i++ )
+			{
+				Vector3	corner = path.corners[i];
+				Debug.DrawLine( prevCorner, corner, Color.red );
+				prevCorner = corner;
+			}
 		}
 
 		// STEERING ///////////////////////////////////////////////////////////////
@@ -210,47 +274,132 @@ public class BerryBehaviour : MonoBehaviour
 		position = position + velocity;
 		//////////////////////////////////////////////////////////// EO STEERING //
 
-		// DEBUG ///////////////////////////////////////////////////////////////
-		Debug.DrawRay( transform.position, velocity.normalized * 2, Color.green );
-		Debug.DrawRay( transform.position, steering.normalized * 2, Color.blue );
-		//////////////////////////////////////////////////////////// EO DEBUG //
+		// // DEBUG ///////////////////////////////////////////////////////////////
+		// Debug.DrawRay( transform.position, velocity.normalized * 2, Color.green );
+		// Debug.DrawRay( transform.position, steering.normalized * 2, Color.blue );
+		// //////////////////////////////////////////////////////////// EO DEBUG //
 
 		// Apply position
 		transform.position = position;
+
+		// Rotate towards directions
+		transform.rotation = Quaternion.LookRotation( velocity );
+
+		// // Auto squish
+		// if( Time.time - bornTime > 1 )
+		// 	currentState = BerryState.Squash;
 	}
 
 	private void MoveExitState()
 	{
 		DebugExit( "Move" );
-		// if( FSM_DEBUG ) print("FSM -> MoveExitState");
 	}
 // EO MOVE STATE //
 
-// IDLE STATE //
+// SQUASH STATE //
 	private float squashTime;
 	private void SquashEnterState()
 	{
 		DebugEnter( "Squash" );
 
+		// Set timer
 		squashTime = Time.time;
 
+		// Change view to squished
+		animator.SetTrigger( "Squash" );
+
+		// Spawn splash graphics
 		GameObject splash = Instantiate( Resources.Load("Splash") ) as GameObject;
-		splash.transform.position = transform.position - Vector3.up * 0.4f;
+		splash.transform.position = transform.position + Vector3.up * 0.01f;
+
+		// Turn off colliders
+		GameObject.Find("Bone").gameObject.GetComponent<SphereCollider>().enabled = false;
+
+		GetComponent<AudioSource>().Play();
 	}
 
 	private void SquashState()
 	{
 		DebugExecute( "Squash" );
 
-		// if( Time.time - squashTime > 1 )
-		// 	currentState = BerryState.FromTable;
+		if( Time.time - squashTime > 1 )
+			currentState = BerryState.FromTable;
+
 	}
 
 	private void SquashExitState()
 	{
-		DebugExit( "Idle" );
+		DebugExit( "Squash" );
+		animator.SetTrigger( "Idle" );
 	}
-// EO IDLE STATE //
+// EO SQUASH STATE //
+
+// FROM TABLE STATE //
+	private float fromTableStartTime;
+	private void FromTableEnterState()
+	{
+		DebugEnter( "FromTable" );
+
+		fromTableStartTime = Time.time;
+	}
+
+	private void FromTableState()
+	{
+		DebugExecute( "FromTable" );
+
+		// Move upwards
+		transform.position += Vector3.up * 2;
+
+		// After certain type, put it to blender
+		if( Time.time - fromTableStartTime > 0.5f )
+			currentState = BerryState.ToBlender;
+	}
+
+	private void FromTableExitState()
+	{
+		DebugExit( "FromTable" );
+	}
+// EO FROM TABLE STATE //
+
+// TO BLENDER STATE //
+	private float toBlenderStartTime;
+	private void ToBlenderEnterState()
+	{
+		DebugEnter( "ToBlender" );
+
+		// Set timer
+		toBlenderStartTime = Time.time;
+
+		// Put it to starting position
+		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 10 + Quaternion.Euler(0, -Random.Range(0,360), 0) * Vector3.right * 1;
+
+
+		// Turn on colliders
+		GameObject.Find("Bone").GetComponent<SphereCollider>().enabled = true;
+		transform.GetComponent<Rigidbody>().isKinematic = false; 
+	}
+
+	private void ToBlenderState()
+	{
+		DebugExecute( "ToBlender" );
+
+
+		// // Move downwards
+		// transform.position -= Vector3.up * 2;
+
+		// When it arrives to the blender
+		// if( Time.time - toBlenderStartTime > 0.5f ){
+		if( transform.position.y < 2 ){
+			// BlenderBehaviour.liquidAmount += 1;
+			currentState = BerryState.Idle;
+		}
+	}
+
+	private void ToBlenderExitState()
+	{
+		DebugExit( "ToBlender" );
+	}
+// EO TO BLENDER STATE //
 
 // STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
 	private Vector3 desiredVelocity;
@@ -275,4 +424,17 @@ public class BerryBehaviour : MonoBehaviour
 		return steering;
 	}
 //////////////////////////////////////////////////////////// EO STEER BEHAVIOURS //
+
+	// public Transform temp;
+// OTHER METHODS ///////////////////////////////////////////////////////////////
+	private void GeneratePath( Vector3 targetLocation, bool random = false )
+	{
+		if( random ){
+			// targetLocation = new Vector3( Random.Range( -5, 5 ), 0, Random.Range( -5, 5 ) );
+			targetLocation = Quaternion.Euler(0, -Random.Range(0,360), 0) * Vector3.right * 5;
+		}
+
+		NavMesh.CalculatePath( transform.position, targetLocation, NavMesh.AllAreas, path );
+	}
+//////////////////////////////////////////////////////////// EO OTHER METHODS //
 }
