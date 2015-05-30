@@ -19,7 +19,7 @@ public class BerryBehaviour : MonoBehaviour
 	public float maxForce;
 
 	// System
-	public enum BerryState { Idle, Move, Squash, FromTable, Die }
+	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> berries = new List<BerryBehaviour>();
 
@@ -108,6 +108,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.FromTable:
 				FromTableEnterState();
 				break;
+			case BerryState.ToBlender:
+				ToBlenderEnterState();
+				break;
 			// case BerryState.Die:
 			// 	DieEnterState();
 			// 	break;
@@ -130,6 +133,9 @@ public class BerryBehaviour : MonoBehaviour
 			case BerryState.FromTable:
 				FromTableState();
 				break;
+			case BerryState.ToBlender:
+				ToBlenderState();
+				break;
 			// case BerryState.Die:
 			// 	DieState();
 			// 	break;
@@ -151,6 +157,9 @@ public class BerryBehaviour : MonoBehaviour
 				break;
 			case BerryState.FromTable:
 				FromTableExitState();
+				break;
+			case BerryState.ToBlender:
+				ToBlenderExitState();
 				break;
 			// case BerryState.Die:
 			// 	DieExitState();
@@ -270,21 +279,24 @@ public class BerryBehaviour : MonoBehaviour
 // EO SQUASH STATE //
 
 // FROM TABLE STATE //
+	private float fromTableStartTime;
 	private void FromTableEnterState()
 	{
 		DebugEnter( "FromTable" );
+
+		fromTableStartTime = Time.time;
 	}
 
 	private void FromTableState()
 	{
 		DebugExecute( "FromTable" );
 
-		transform.position += Vector3.up * 3;
+		// Move upwards
+		transform.position += Vector3.up * 2;
 
-		// GetComponent<Renderer>().material.color = color * new Vector4(1,1,1,opacity);
-
-		// if( Time.time > 0 )
-		// 	currentState = BerryState.Move;
+		// After certain type, put it to blender
+		if( Time.time - fromTableStartTime > 0.5f )
+			currentState = BerryState.ToBlender;
 	}
 
 	private void FromTableExitState()
@@ -292,7 +304,43 @@ public class BerryBehaviour : MonoBehaviour
 		DebugExit( "FromTable" );
 	}
 // EO FROM TABLE STATE //
-// 
+
+
+// TO BLENDER STATE //
+	private float toBlenderStartTime;
+	private void ToBlenderEnterState()
+	{
+		DebugEnter( "ToBlender" );
+
+		// Set timer
+		toBlenderStartTime = Time.time;
+
+		// Put it to starting position
+		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 10;
+	}
+
+	private void ToBlenderState()
+	{
+		DebugExecute( "ToBlender" );
+
+		// Move downwards
+		transform.position -= Vector3.up * 2;
+
+		// When it arrives to the blender
+		// if( Time.time - toBlenderStartTime > 0.5f ){
+		if( transform.position.y < 2 ){
+			BlenderBehaviour.liquidAmount += 1;
+			currentState = BerryState.Idle;
+		}
+	}
+
+	private void ToBlenderExitState()
+	{
+		DebugExit( "ToBlender" );
+	}
+// EO TO BLENDER STATE //
+
+
 // STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
 	private Vector3 desiredVelocity;
 

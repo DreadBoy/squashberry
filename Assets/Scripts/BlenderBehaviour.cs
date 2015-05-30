@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class BlenderBehaviour : MonoBehaviour
 {
 	private static bool FSM_DEBUG = false;
+	public static BlenderBehaviour instance;
 
 	// System
 	public enum BlenderState{ Idle, Blend }
@@ -38,6 +39,7 @@ public class BlenderBehaviour : MonoBehaviour
 
 	void Awake()
 	{
+		instance = this;
 		initPosition = transform.position;
 		currentState = BlenderState.Idle;
 		liquid = transform.Find("Liquid");
