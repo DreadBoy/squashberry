@@ -9,7 +9,7 @@ public class BerryBehaviour : MonoBehaviour
 	// Debug
 	private static bool FSM_DEBUG = false;
 
-	public Transform targetTransform;
+	// public Transform targetTransform;
 
 	// Handling
 	public float acceleration;
@@ -43,8 +43,9 @@ public class BerryBehaviour : MonoBehaviour
 
 	void Awake()
 	{
-		_state = BerryState.Move;
+		transform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
 		position = transform.position;
+		_state = BerryState.Move;
 		velocity = Vector3.forward;
 	}
 	
@@ -57,6 +58,7 @@ public class BerryBehaviour : MonoBehaviour
     {
         if( !EventSystem.current.IsPointerOverGameObject() )
         {
+        	BlenderBehaviour.liquidAmount += 1;
             Destroy(gameObject);
         }
     }
@@ -170,20 +172,23 @@ public class BerryBehaviour : MonoBehaviour
 		DebugEnter( "Move" );
 	}
 
-	private Vector3 desiredVelocity;
+	private Vector3 target;
+
 	private void MoveState()
 	{
 		DebugExecute( "Move" );
 
-		Vector3 target = targetTransform.position;
+		// Vector3 target = targetTransform.position;
+		if( (target - position).magnitude < 1 ){
+			// targetTransform.position = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+			target = new Vector3( Random.Range( -10,10 ), 0.5f, Random.Range( -10,10 ) );
+		}
 
 		// STEERING ///////////////////////////////////////////////////////////////
-		// Euler integration
-		position = position + velocity;
 
 		// Calculating forces
-		desiredVelocity = (target - position).normalized * maxVelocity;
-		steering = desiredVelocity - velocity;
+		steering = Seek( target, true );
+		// steering += Flee( Vector3.forward * 5, true );
 
 		// Adding forces
 		steering = Vector3.ClampMagnitude( steering, maxForce );
@@ -209,4 +214,28 @@ public class BerryBehaviour : MonoBehaviour
 		// if( FSM_DEBUG ) print("FSM -> MoveExitState");
 	}
 // EO MOVE STATE //
+
+// STEER BEHAVIOURS ///////////////////////////////////////////////////////////////
+	private Vector3 desiredVelocity;
+
+	private Vector3 Seek( Vector3 target, bool debug = false )
+	{
+		Vector3 desiredVelocity = (target - transform.position).normalized * maxVelocity;
+		Vector3 steering = desiredVelocity - velocity;
+
+		if( debug )
+			Debug.DrawRay( transform.position, steering.normalized * 2, Color.white * 0.7f );
+
+		return steering;
+	}
+	private Vector3 Flee( Vector3 target, bool debug = false )
+	{
+		Vector3 steering = -Seek( target );
+
+		if( debug )
+			Debug.DrawRay( transform.position, steering.normalized * 2, Color.white * 0.7f );
+
+		return steering;
+	}
+//////////////////////////////////////////////////////////// EO STEER BEHAVIOURS //
 }
