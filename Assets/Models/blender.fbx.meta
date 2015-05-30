@@ -31,6 +31,8 @@ ModelImporter:
     100046: Smoothie.003
     100048: Smoothie.004
     100050: Smoothie.000
+    100052: Circle
+    100054: Cap
     400000: //RootNode
     400002: Cube
     400004: Cylinder
@@ -57,6 +59,8 @@ ModelImporter:
     400046: Smoothie.003
     400048: Smoothie.004
     400050: Smoothie.000
+    400052: Circle
+    400054: Cap
     2300000: Cube
     2300002: Cylinder
     2300004: Cylinder.001
@@ -81,6 +85,8 @@ ModelImporter:
     2300042: Smoothie.003
     2300044: Smoothie.004
     2300046: Smoothie.000
+    2300048: Circle
+    2300050: Cap
     3300000: Cube
     3300002: Cylinder
     3300004: Cylinder.001
@@ -105,6 +111,8 @@ ModelImporter:
     3300042: Smoothie.003
     3300044: Smoothie.004
     3300046: Smoothie.000
+    3300048: Circle
+    3300050: Cap
     4300000: Cylinder.004
     4300002: Cube
     4300004: Cylinder.003
@@ -129,6 +137,8 @@ ModelImporter:
     4300042: Smoothie.003
     4300044: Smoothie.004
     4300046: Smoothie.000
+    4300048: Circle
+    4300050: Cap
     7400000: Cylinder.005|ButtonPress
     7400002: Cylinder.005|ButtonRelease
     7400004: Cylinder.004|ButtonPress
