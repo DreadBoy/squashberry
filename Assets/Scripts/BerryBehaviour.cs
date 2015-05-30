@@ -251,6 +251,9 @@ public class BerryBehaviour : MonoBehaviour
 		// Apply position
 		transform.position = position;
 
+		// Rotate towards directions
+		transform.rotation = Quaternion.LookRotation( velocity );
+
 		// // Auto squish
 		// if( Time.time - bornTime > 1 )
 		// 	currentState = BerryState.Squash;
@@ -272,7 +275,6 @@ public class BerryBehaviour : MonoBehaviour
 		squashTime = Time.time;
 
 		// Change view to squished
-		animator.SetTrigger( "Idle" );
 		animator.SetTrigger( "Squash" );
 
 		// Spawn splash graphics
