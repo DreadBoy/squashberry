@@ -180,7 +180,7 @@ public class BlenderBehaviour : MonoBehaviour
 
 		// Shake blender
 		float force = 0.3f;
-		// transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
+		transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
 
 		// Rotate blades
 		blades.transform.Rotate( Vector3.forward * 20 );
