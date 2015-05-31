@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BerryBehaviour : MonoBehaviour
 {
@@ -374,6 +375,8 @@ public class BerryBehaviour : MonoBehaviour
 
         //Increase Player Score
         Settings.saveData.Score += 10;
+        GameObject.Find("Settings").GetComponent<Settings>().scoreDisplay.GetComponent<Text>().text = "Score: " + Settings.saveData.Score;
+
 	}
 
 	private void SquashState()

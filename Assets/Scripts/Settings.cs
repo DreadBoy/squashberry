@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using System.Xml.Serialization;
 using System.IO;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Settings : MonoBehaviour
     }
 
     public static SaveData saveData = new SaveData();
+    
+    public Text scoreDisplay;
 
     void Awake()
     {
