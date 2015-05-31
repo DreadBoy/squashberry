@@ -24,6 +24,19 @@ public class GameManager : MonoBehaviour {
 	{
 		ExecuteState();
 	}
+
+	void Update()
+	{
+		if( Input.GetKeyDown( "space" ) ){
+			SpawnBerry();
+		}
+		if( Input.GetKeyDown( "5" ) ){
+			for( int i = 0; i < 5; i++) SpawnBerry();
+		}
+		if( Input.GetKeyDown( "0" ) ){
+			for( int i = 0; i < 10; i++) SpawnBerry();
+		}
+	}
 //////////////////////////////////////////////////////////// EO UNITY METHODS //
 
 
