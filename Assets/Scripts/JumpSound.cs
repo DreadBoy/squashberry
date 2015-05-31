@@ -7,6 +7,8 @@ public class JumpSound : MonoBehaviour
 
 	public void PlayJumpSound()
 	{
-		JumpAudio.Play();
+		int rand = Random.Range(0, 10);
+		if (rand < 1)
+			JumpAudio.Play();
 	}
 }
