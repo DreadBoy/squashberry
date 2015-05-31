@@ -7,7 +7,7 @@ public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
 	private static bool FSM_DEBUG = false;
-	private static bool AUTO_SQUASH = true;
+	private static bool AUTO_SQUASH = false;
 
 	// public Transform targetTransform;
 

@@ -49,7 +49,6 @@ public class BlenderButtonPress : MonoBehaviour
 
 		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
 		{
-			Debug.Log("Meh");
 			Destroy(n.gameObject);
 		}
 
