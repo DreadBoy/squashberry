@@ -153,7 +153,8 @@ public class GameManager : MonoBehaviour {
 	{
 		if (BerryBehaviour.instances.Count < 100)
 		{
-			Instantiate(Resources.Load("BlueBerry"));
+			GameObject newBerry = Instantiate(Resources.Load("BlueBerry")) as GameObject;
+			newBerry.name = "Berry";
 			// Invoke("SpawnBerry", Random.Range(1f, 2f));
 			Invoke("SpawnBerry", 0.4f );
 		}

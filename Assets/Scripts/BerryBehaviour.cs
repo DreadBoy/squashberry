@@ -97,30 +97,30 @@ public class BerryBehaviour : MonoBehaviour
 		velocity = Vector3.forward;
 	}
 
-	void Update()
-	{
-		if( Input.GetMouseButtonDown(0) ){
-			print(" OnMouseDown");
-			Vector3 mouseOnTable = Input.mousePosition;
-			mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
-			mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
-			GeneratePath( mouseOnTable, false );
-		}
-	}
+	//void Update()
+	//{
+	//	if( Input.GetMouseButtonDown(0) ){
+	//		print(" OnMouseDown");
+	//		Vector3 mouseOnTable = Input.mousePosition;
+	//		mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
+	//		mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
+	//		GeneratePath( mouseOnTable, false );
+	//	}
+	//}
 	void FixedUpdate()
 	{
 		ExecuteState();
 	}
 
-	void OnMouseDown()
-	{
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
-			// BlenderBehaviour.liquidAmount += 1;
-			// Destroy(gameObject);
-			currentState = BerryState.Squash;
-		}
-	}
+	//void OnMouseDown()
+	//{
+	//	if (!EventSystem.current.IsPointerOverGameObject())
+	//	{
+	//		// BlenderBehaviour.liquidAmount += 1;
+	//		// Destroy(gameObject);
+	//		currentState = BerryState.Squash;
+	//	}
+	//}
 	//////////////////////////////////////////////////////////// EO UNITY METHODS //
 
 
