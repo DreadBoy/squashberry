@@ -10,7 +10,7 @@ public class Settings : MonoBehaviour
     public class SaveData
     {
         public String PlayerName = "";
-        public Int32 Score = 300;
+        public Int32 Score = 0;
         public Boolean music = true;
         public Boolean SFX = true;
     }
@@ -56,6 +56,7 @@ public class Settings : MonoBehaviour
         using (TextReader reader = new StringReader(PlayerPrefs.GetString("Settings")))
         {
             saveData = (SaveData)serializer.Deserialize(reader);
+            saveData.Score = 0;
         }
     }
 }

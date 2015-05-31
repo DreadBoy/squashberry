@@ -371,6 +371,9 @@ public class BerryBehaviour : MonoBehaviour
 		GameObject.Find("Bone").gameObject.GetComponent<SphereCollider>().enabled = false;
 
 		GetComponent<AudioSource>().Play();
+
+        //Increase Player Score
+        Settings.saveData.Score += 10;
 	}
 
 	private void SquashState()
