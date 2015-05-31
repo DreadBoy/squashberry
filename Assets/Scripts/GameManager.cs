@@ -6,10 +6,8 @@ public class GameManager : MonoBehaviour {
 	// Debug
 	private static bool FSM_DEBUG = false;
 
-	// Handling
-	public float berrySpawnDelay = 3;
-
 	// System
+	private float berrySpawnDelay = 2;
 	public enum GameState{ Idle, Run }
 	private GameState _state;
 
@@ -23,6 +21,19 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		ExecuteState();
+	}
+
+	void Update()
+	{
+		if( Input.GetKeyDown( "space" ) ){
+			SpawnBerry();
+		}
+		if( Input.GetKeyDown( "5" ) ){
+			for( int i = 0; i < 5; i++) SpawnBerry();
+		}
+		if( Input.GetKeyDown( "0" ) ){
+			for( int i = 0; i < 10; i++) SpawnBerry();
+		}
 	}
 //////////////////////////////////////////////////////////// EO UNITY METHODS //
 
@@ -153,9 +164,15 @@ public class GameManager : MonoBehaviour {
 	{
 		if (BerryBehaviour.instances.Count < 100)
 		{
-			Instantiate(Resources.Load("BlueBerry"));
+			GameObject newBerry = Instantiate(Resources.Load("BlueBerry")) as GameObject;
+			newBerry.name = "Berry";
 			// Invoke("SpawnBerry", Random.Range(1f, 2f));
-			Invoke("SpawnBerry", 0.4f );
+			// Invoke("SpawnBerry", 0.4f );
+			Invoke("SpawnBerry", berrySpawnDelay + Random.Range( -0.1f, 0.1f ) );
+			berrySpawnDelay -= 0.01f;
+			berrySpawnDelay = Mathf.Max( 0.5f, berrySpawnDelay );
+
+			print( "berrySpawnDelay: " + berrySpawnDelay );
 		}
 	}
 //////////////////////////////////////////////////////////// EO OTHER METHODS //

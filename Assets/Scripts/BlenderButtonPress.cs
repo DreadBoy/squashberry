@@ -1,36 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BlenderButtonPress : MonoBehaviour
 {
 	public GameObject Blender;
 
-	void Update()
+	public void ButtonPress()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			RaycastHit hit;
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Blender.GetComponent<Animator>().SetTrigger("ButtonPress");
+		GetComponent<AudioSource>().Play();
+		Blender.GetComponent<AudioSource>().Play();
 
-			if (Physics.Raycast(ray, out hit))
-			{
-				if (hit.collider != null)
-				{
-					if (hit.collider.gameObject.name == "Button")
-					{
-						Blender.GetComponent<Animator>().SetTrigger("ButtonPress");
-						GetComponent<AudioSource>().Play();
-						Blender.GetComponent<AudioSource>().Play();
+		//BerryBehaviour.BerryState b = BerryBehaviour.BerryState.Die;
+		BlenderBehaviour.instance.currentState = BlenderState.Blend;
 
-						//BerryBehaviour.BerryState b = BerryBehaviour.BerryState.Die;
-						BlenderBehaviour.instance.currentState = BlenderState.Blend;
-
-						StartCoroutine(mixBerries());
-
-					}
-				}
-			}
-		}
+		StartCoroutine(mixBerries());
 	}
 
 	IEnumerator mixBerries()
@@ -49,17 +34,23 @@ public class BlenderButtonPress : MonoBehaviour
 
 		Debug.Log(BlenderBehaviour.berriesInBlender.Count);
 
+		int berriesInBlender = BlenderBehaviour.berriesInBlender.Count;
+
 		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
 		{
 			Destroy(n.gameObject);
 			Debug.Log("Berries destroyed");
 		}
 
-		BlenderLevel.EnableSmoothie();	
+		BlenderLevel.EnableSmoothie();
 
 		yield return new WaitForSeconds(1.8f);
 
 		GetComponent<BoxCollider>().enabled = true;
+
+		Debug.Log("Score multiplier");
+		Settings.saveData.Score += berriesInBlender * BlenderLevel.Level * 10;
+		GameObject.Find("Settings").GetComponent<Settings>().scoreDisplay.GetComponent<Text>().text = "Score: " + Settings.saveData.Score;
 
 		BlenderLevel.DisableSmoothie();
 	}

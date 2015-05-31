@@ -29,7 +29,7 @@ public class LoughingSound : MonoBehaviour
 
 	IEnumerator laughing()
 	{
-		yield return new WaitForSeconds(Random.Range(3, 6));
+		yield return new WaitForSeconds(Random.Range(4, 30));
 
 		GetComponent<AudioSource>().Play();
 
