@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BlenderButtonPress : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class BlenderButtonPress : MonoBehaviour
 
 		Debug.Log(BlenderBehaviour.berriesInBlender.Count);
 
+		int berriesInBlender = BlenderBehaviour.berriesInBlender.Count;
+
 		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
 		{
 			Destroy(n.gameObject);
@@ -44,6 +47,10 @@ public class BlenderButtonPress : MonoBehaviour
 		yield return new WaitForSeconds(1.8f);
 
 		GetComponent<BoxCollider>().enabled = true;
+
+		Debug.Log("Score multiplier");
+		Settings.saveData.Score += berriesInBlender * BlenderLevel.Level * 10;
+		GameObject.Find("Settings").GetComponent<Settings>().scoreDisplay.GetComponent<Text>().text = "Score: " + Settings.saveData.Score;
 
 		BlenderLevel.DisableSmoothie();
 	}
