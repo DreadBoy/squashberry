@@ -472,6 +472,15 @@ public class BerryBehaviour : MonoBehaviour
 
 		// Manage list of berries in blender
 		BlenderBehaviour.berriesInBlender.Add(this);
+		print( "BlenderBehaviour.berriesInBlender.Count: " + BlenderBehaviour.berriesInBlender.Count );
+
+		int berriesCount = BlenderBehaviour.berriesInBlender.Count;
+		if( berriesCount > 0 && berriesCount <= 10 )       BlenderLevel.Level = 0;
+		else if( berriesCount > 10 && berriesCount <= 20 ) BlenderLevel.Level = 1;
+		else if( berriesCount > 20 && berriesCount <= 30 ) BlenderLevel.Level = 2;
+		else if( berriesCount > 30 && berriesCount <= 40 ) BlenderLevel.Level = 3;
+		else if( berriesCount > 40 && berriesCount <= 50 ) BlenderLevel.Level = 4;
+		else if( berriesCount > 50 && berriesCount <= 60 ) BlenderLevel.Level = 5;
 	}
 
 	private void InBlenderState()
