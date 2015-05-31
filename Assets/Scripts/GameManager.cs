@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour {
 	private void RunEnterState()
 	{
 		DebugEnter( "Run" );
-		// SpawnBerry();
+		SpawnBerry();
 	}
 
 	private void RunState()
