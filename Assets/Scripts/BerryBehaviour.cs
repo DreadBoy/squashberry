@@ -7,7 +7,7 @@ public class BerryBehaviour : MonoBehaviour
 {
 	// Debug
 	private static bool FSM_DEBUG = false;
-	private static bool AUTO_SQUASH = false;
+	private static bool AUTO_SQUASH = true;
 
 	// public Transform targetTransform;
 
@@ -22,6 +22,7 @@ public class BerryBehaviour : MonoBehaviour
 	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, InBlender, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
+	public Texture SadTexture;
 	private float bornTime;
 	private Animator animator;
 	private SkinnedMeshRenderer skinnedMeshRenderer;
@@ -415,6 +416,9 @@ public class BerryBehaviour : MonoBehaviour
 		// Turn on colliders
 		GameObject.Find("Bone").GetComponent<SphereCollider>().enabled = true;
 		transform.GetComponent<Rigidbody>().isKinematic = false;
+
+		// Cange Texture
+		transform.Find("Berry").GetComponent<Renderer>().material.SetTexture(0, SadTexture);
 	}
 
 	private void ToBlenderState()
