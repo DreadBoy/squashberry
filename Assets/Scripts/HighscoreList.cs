@@ -8,9 +8,6 @@ using System.Linq;
 
 public class HighscoreList : MonoBehaviour
 {
-
-    public GameObject scorePrefab;
-
     public class Score
     {
         public String name { get; set; }
@@ -42,7 +39,7 @@ public class HighscoreList : MonoBehaviour
 
         }
 
-        scores = scores.Take(5).ToList();
+        scores = scores.Take(4).ToList();
 
         Int32 i = 0;
         foreach (Transform child in transform)

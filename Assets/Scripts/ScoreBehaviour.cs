@@ -18,7 +18,7 @@ public class ScoreBehaviour : MonoBehaviour
             return;
         }
 
-        Name.text = score.name + ": ";
+        Name.text = score.name;
         Score.text = score.score.ToString();
 
     }
