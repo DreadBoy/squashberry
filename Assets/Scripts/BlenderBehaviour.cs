@@ -182,16 +182,26 @@ public class BlenderBehaviour : MonoBehaviour
 	{
 		DebugExecute("Blend");
 
-		// Shake blender
 		float force = 0.3f;
-		transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
+		float blendTime = 3;
 
-		// Rotate blades
-		blades.transform.Rotate( Vector3.forward * 20 );
+		float timeSinceBlendOn = Time.time - startBlendingTime;
 
-		// Stop blending
-		if (Time.time - startBlendingTime > 3)
+		if( timeSinceBlendOn > 0.5f && timeSinceBlendOn < blendTime - 0.3f ){
+			// Shake blender
+			transform.position = initPosition + new Vector3( Random.Range(-force, force), 0, Random.Range(-force, force) );
+
+			// Rotate blades
+			blades.transform.Rotate( Vector3.forward * 20 );
+		}
+		else{
+			// Reset position
+			transform.position = initPosition;
+		}
+	
+		if( timeSinceBlendOn > blendTime + 0.5f )
 		{
+			// Stop blending
 			currentState = BlenderState.Idle;
 		}
 	}
@@ -200,8 +210,6 @@ public class BlenderBehaviour : MonoBehaviour
 	{
 		DebugExit("Blend");
 
-		// Reset position
-		transform.position = initPosition;
 
 		// Empty blender
 		// liquidAmount = 0;
