@@ -42,6 +42,11 @@ public class BerryBehaviour : MonoBehaviour
 	{
 		instances.Remove(this);
 	}
+	void OnDestroy()
+	{
+		// Manage list of berries in blender
+		BlenderBehaviour.berriesInBlender.Remove(this);
+	}
 	//////////////////////////////////////////////////////////// EO INSTANCES LIST //
 
 	// UNITY METHODS ///////////////////////////////////////////////////////////////
@@ -477,9 +482,6 @@ public class BerryBehaviour : MonoBehaviour
 	private void InBlenderExitState()
 	{
 		DebugExit("InBlender");
-
-		// Manage list of berries in blender
-		BlenderBehaviour.berriesInBlender.Remove(this);
 	}
 	// EO IN BLENDER STATE //
 
