@@ -97,16 +97,18 @@ public class BerryBehaviour : MonoBehaviour
 		velocity = Vector3.forward;
 	}
 
-	void Update()
-	{
-		if( Input.GetMouseButtonDown(0) ){
-			print(" OnMouseDown");
-			Vector3 mouseOnTable = Input.mousePosition;
-			mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
-			mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
-			GeneratePath( mouseOnTable, false );
-		}
-	}
+	// void Update()
+	// {
+	// 	// DEBUG: Change path
+	// 	if( Input.GetMouseButtonDown(0) ){
+	// 		print(" OnMouseDown");
+	// 		Vector3 mouseOnTable = Input.mousePosition;
+	// 		mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
+	// 		mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
+	// 		GeneratePath( mouseOnTable, false );
+	// 	}
+	// }
+
 	void FixedUpdate()
 	{
 		ExecuteState();
