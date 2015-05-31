@@ -67,10 +67,6 @@ public class BlenderBehaviour : MonoBehaviour
 		}
 	}
 
-	void OnGUI()
-	{
-		GUI.Label( new Rect(0,0,Screen.width,Screen.width), ("berriesInBlender: " + berriesInBlender.Count) );
-	}
 	//////////////////////////////////////////////////////////// EO UNITY METHODS //
 
 
