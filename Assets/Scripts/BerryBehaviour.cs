@@ -422,7 +422,7 @@ public class BerryBehaviour : MonoBehaviour
 		DebugEnter( "InBlender" );
 
 		// Manage list of berries in blender
-		BlenderBehaviour.beriesInBlender.Add( this );
+		BlenderBehaviour.berriesInBlender.Add( this );
 	}
 
 	private void InBlenderState()
@@ -438,7 +438,7 @@ public class BerryBehaviour : MonoBehaviour
 		DebugExit( "InBlender" );
 
 		// Manage list of berries in blender
-		BlenderBehaviour.beriesInBlender.Remove( this );
+		BlenderBehaviour.berriesInBlender.Remove( this );
 	}
 // EO IN BLENDER STATE //
 

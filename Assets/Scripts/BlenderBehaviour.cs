@@ -7,7 +7,7 @@ public class BlenderBehaviour : MonoBehaviour
 {
 	private static bool FSM_DEBUG = false;
 	public static BlenderBehaviour instance;
-	public static List<BerryBehaviour> beriesInBlender = new List<BerryBehaviour>();
+	public static List<BerryBehaviour> berriesInBlender = new List<BerryBehaviour>();
 
 	// System
 	private BlenderState _state;
@@ -176,7 +176,6 @@ public class BlenderBehaviour : MonoBehaviour
 		DebugEnter("Blend");
 
 		startBlendingTime = Time.time;
-
 	}
 
 	private void BlendState()
