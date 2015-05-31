@@ -450,7 +450,7 @@ public class BerryBehaviour : MonoBehaviour
 
 		// When it arrives to the blender
 		// if( Time.time - toBlenderStartTime > 0.5f ){
-		if (transform.position.y < BlenderBehaviour.instance.levelMarker.position.y)
+		if (transform.position.y < 8 )
 		{
 			// BlenderBehaviour.liquidAmount += 1;
 			// currentState = BerryState.Idle;
