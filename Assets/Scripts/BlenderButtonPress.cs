@@ -35,6 +35,8 @@ public class BlenderButtonPress : MonoBehaviour
 
 	IEnumerator mixBerries()
 	{
+		GetComponent<BoxCollider>().enabled = false;
+
 		yield return new WaitForSeconds(1.5f);
 
 		//foreach (GameObject g in GameObject.FindGameObjectsWithTag("Berry"))
@@ -48,7 +50,11 @@ public class BlenderButtonPress : MonoBehaviour
 		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
 		{
 			Debug.Log("Meh");
-		//	Destroy(n.gameObject);
+			Destroy(n.gameObject);
 		}
+
+		yield return new WaitForSeconds(1.5f);
+
+		GetComponent<BoxCollider>().enabled = true;
 	}
 }
