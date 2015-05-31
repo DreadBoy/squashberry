@@ -8,7 +8,7 @@ public class HighscoreSubmit : MonoBehaviour {
     public void Submit()
     {
 
-        WebRequest request = WebRequest.Create("http://squasberry.evennode.com/" + Settings.saveData.playerName + "?score=" + 0);
+        WebRequest request = WebRequest.Create("http://squasberry.evennode.com/" + Settings.saveData.PlayerName + "?score=" + Settings.saveData.Score);
         request.Method = "POST";
         request.ContentType = "application/json; charset=utf-8";
         using (var reponse = (HttpWebResponse)request.GetResponse())

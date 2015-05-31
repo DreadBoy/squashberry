@@ -11,7 +11,7 @@ public class SubmitNameChange : MonoBehaviour
     private void Start()
     {
         GetComponent<Button>().onClick.AddListener(() => { submitName(); });
-        input.text = Settings.saveData.playerName;
+        input.text = Settings.saveData.PlayerName;
     }
 
     public void submitName()

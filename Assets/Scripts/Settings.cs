@@ -9,7 +9,8 @@ public class Settings : MonoBehaviour
     [Serializable]
     public class SaveData
     {
-        public String playerName = "";
+        public String PlayerName = "";
+        public Int32 Score = 300;
         public Boolean music = true;
         public Boolean SFX = true;
     }
@@ -23,7 +24,7 @@ public class Settings : MonoBehaviour
 
     public void PlayerName(String name)
     {
-        saveData.playerName = name;
+        saveData.PlayerName = name;
         savePlayerPrefs();
     }
 
