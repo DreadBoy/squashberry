@@ -4,22 +4,32 @@ using System;
 using System.Net;
 using System.IO;
 
-public class HighscoreSubmit : MonoBehaviour {
+public class HighscoreSubmit : MonoBehaviour
+{
     public void Submit()
     {
+        string url = "http://squasberry.evennode.com/" + Settings.saveData.PlayerName + "?score=" + Settings.saveData.Score;
 
-        WebRequest request = WebRequest.Create("http://squasberry.evennode.com/" + Settings.saveData.PlayerName + "?score=" + Settings.saveData.Score);
-        request.Method = "POST";
-        request.ContentType = "application/json; charset=utf-8";
-        using (var reponse = (HttpWebResponse)request.GetResponse())
+        WWWForm form = new WWWForm();
+        form.AddField("var1", "value1");
+        WWW www = new WWW(url, form);
+
+        StartCoroutine(WaitForRequest(www));
+    }
+
+
+    IEnumerator WaitForRequest(WWW www)
+    {
+        yield return www;
+
+        // check for errors
+        if (www.error == null)
         {
-
-            using (var reader = new StreamReader(reponse.GetResponseStream()))
-            {
-                var objText = reader.ReadToEnd();
-                Debug.Log(objText);
-            }
-
+            Debug.Log("WWW Ok!: " + www.data);
+        }
+        else
+        {
+            Debug.Log("WWW Error: " + www.error);
         }
     }
 }
