@@ -23,8 +23,17 @@ public class Tab : MonoBehaviour
 					switch (hit.collider.gameObject.name)
 					{
 						case "Bone":
-							hit.collider.gameObject.transform.parent.gameObject.transform.parent.GetComponent<BerryBehaviour>().currentState = BerryBehaviour.BerryState.Squash;
-							Debug.Log("Squash");
+							GameObject berry = hit.collider.gameObject.transform.parent.gameObject.transform.parent.gameObject;
+
+							if (berry.GetComponent<BerryBehaviour>().currentState == BerryBehaviour.BerryState.Move)
+							{
+								berry.GetComponent<BerryBehaviour>().currentState = BerryBehaviour.BerryState.Squash;
+								Debug.Log("Squash");
+							}
+							else
+							{
+								Table.Play();
+							}
 							break;
 						case "Button":
 							Button.ButtonPress();
