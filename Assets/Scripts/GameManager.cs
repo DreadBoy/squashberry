@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	private float berrySpawnDelay = 2;
 	public enum GameState{ Idle, Run }
 	private GameState _state;
+	public static int berriesOnTable = 0;
 
 // UNITY METHODS ///////////////////////////////////////////////////////////////
 

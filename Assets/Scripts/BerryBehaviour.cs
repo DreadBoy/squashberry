@@ -34,10 +34,24 @@ public class BerryBehaviour : MonoBehaviour
 	private Vector3 steering;
 
 
+	public Animator gameOverPanel;
+	public GameObject populateScore;
 	// INSTANCES LIST ///////////////////////////////////////////////////////////////
 	void OnEnable()
 	{
 		instances.Add(this);
+
+		float maxBerries = 3;
+		GameManager.berriesOnTable++;
+		print( "GameManager.berriesOnTable: " + GameManager.berriesOnTable );
+
+		float scale = GameManager.berriesOnTable / maxBerries;
+
+		if( GameManager.berriesOnTable >= maxBerries ){
+			GameManager.berriesOnTable = 0;
+			GameObject.Find("Score123").GetComponent<SubmitScore>().PopulateScore();
+			GameObject.Find("Game Over 123").GetComponent<Animator>().SetTrigger("Game Over In");
+		}
 	}
 	void OnDisable()
 	{
@@ -421,6 +435,8 @@ public class BerryBehaviour : MonoBehaviour
 	private void FromTableState()
 	{
 		DebugExecute("FromTable");
+
+		GameManager.berriesOnTable--;
 
 		// Move upwards
 		transform.position += Vector3.up * 2;
