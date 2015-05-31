@@ -8,9 +8,6 @@ public class LoughingSound : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		BlenderLevel.Level = 2;
-
-
 		Blueberry = transform.parent.gameObject.GetComponent<BerryBehaviour>();
 
 		if (Blueberry == null)
