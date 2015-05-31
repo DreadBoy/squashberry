@@ -21,10 +21,33 @@ public class BlenderButtonPress : MonoBehaviour
 						Blender.GetComponent<Animator>().SetTrigger("ButtonPress");
 						GetComponent<AudioSource>().Play();
 
+						//BerryBehaviour.BerryState b = BerryBehaviour.BerryState.Die;
 						BlenderBehaviour.instance.currentState = BlenderState.Blend;
+
+						StartCoroutine(mixBerries());
+
 					}
 				}
 			}
+		}
+	}
+
+	IEnumerator mixBerries()
+	{
+		yield return new WaitForSeconds(1.5f);
+
+		//foreach (GameObject g in GameObject.FindGameObjectsWithTag("Berry"))
+		//{
+		//	if (g.GetComponent<BerryBehaviour>().currentState == BerryBehaviour.BerryState.InBlender)
+		//	{
+		//		Destroy(g);
+		//	}
+		//}
+
+		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
+		{
+			Debug.Log("Meh");
+		//	Destroy(n.gameObject);
 		}
 	}
 }

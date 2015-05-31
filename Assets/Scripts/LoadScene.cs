@@ -7,11 +7,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class LoadScene : MonoBehaviour
 {
-    public String name;
+    public String LevelName;
 
     public void loadLevel()
     {
-        Application.LoadLevel(name);
+        Application.LoadLevel(LevelName);
     }
 
     void Start()
