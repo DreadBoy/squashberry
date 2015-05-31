@@ -47,9 +47,6 @@ public class BerryBehaviour : MonoBehaviour
 
 	void Awake()
 	{
-		path = new NavMeshPath();
-		GeneratePath(Vector3.zero, true);
-
 		bornTime = Time.time;
 
 		animator = GetComponent<Animator>();
@@ -57,7 +54,7 @@ public class BerryBehaviour : MonoBehaviour
 		// skinnedMeshRenderer = temp.GetComponent<SkinnedMeshRenderer>();
 
 		// Randomly position
-
+		path = new NavMeshPath();
 		NavMeshHit hit;
 		if (NavMesh.SamplePosition(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), out hit, 32.0f, NavMesh.AllAreas))
 		{
@@ -73,6 +70,8 @@ public class BerryBehaviour : MonoBehaviour
 
 		//transform.position = new Vector3( Random.Range( -10,10 ), 0, Random.Range( -10,10 ) );
 		//position = transform.position;
+		
+		// GeneratePath( Vector3.zero, true );
 
 		// Get another random position
 		if (NavMesh.SamplePosition(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)), out hit, 32.0f, NavMesh.AllAreas))
@@ -90,7 +89,18 @@ public class BerryBehaviour : MonoBehaviour
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
 	}
-
+	public Transform temp;
+	void Update()
+	{
+		if( Input.GetMouseButtonDown(0) ){
+			print(" OnMouseDown");
+			Vector3 mouseOnTable = Input.mousePosition;
+			mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
+			mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
+			temp.position = mouseOnTable;
+			GeneratePath( mouseOnTable, false );
+		}
+	}
 	void FixedUpdate()
 	{
 		ExecuteState();
@@ -255,7 +265,7 @@ public class BerryBehaviour : MonoBehaviour
 
 		animator.SetTrigger("Jumping");
 
-		GeneratePath(Vector3.right * 10, true);
+		GeneratePath( Vector3.zero, true );
 	}
 
 	private Vector3 target;
@@ -271,31 +281,33 @@ public class BerryBehaviour : MonoBehaviour
 			target = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
 		}
 
-		// // Generate new path if necessary
-		// if( currentCornerId >= path.corners.Length ){
-		// 	GeneratePath( Vector3.zero, true );
-		// 	currentCornerId = 0;
-		// }
+		// Generate new path if necessary
+		if( currentCornerId >= path.corners.Length ){
+			GeneratePath( Vector3.zero, true );
+		}
 
-		// // Get current point on the path
-		// target = path.corners[ currentCornerId ];
+		// Get current point on the path
+		if( path.corners.Length > 0 )
+			target = path.corners[ currentCornerId ];
+		else 
+			target = Vector3.zero;
 
-		// // Get id of the next point on the path
-		// if( (target - transform.position).magnitude < 0.3f ){
-		// 	currentCornerId++;
-		// }
+		// Get id of the next point on the path
+		if( (target - transform.position).magnitude < 0.3f ){
+			currentCornerId++;
+		}
 
-		// // Draw Path
-		// if( path != null && path.corners.Length > 0 )
-		// {
-		// 	Vector3 prevCorner = path.corners[0];
-		// 	for( int i = 1; i < path.corners.Length; i++ )
-		// 	{
-		// 		Vector3	corner = path.corners[i];
-		// 		Debug.DrawLine( prevCorner, corner, Color.red );
-		// 		prevCorner = corner;
-		// 	}
-		// }
+		// Draw Path
+		if( path != null && path.corners.Length > 0 )
+		{
+			Vector3 prevCorner = path.corners[0];
+			for( int i = 1; i < path.corners.Length; i++ )
+			{
+				Vector3	corner = path.corners[i];
+				Debug.DrawLine( prevCorner, corner, Color.red );
+				prevCorner = corner;
+			}
+		}
 
 		// STEERING ///////////////////////////////////////////////////////////////
 
@@ -508,15 +520,19 @@ public class BerryBehaviour : MonoBehaviour
 
 	// public Transform temp;
 	// OTHER METHODS ///////////////////////////////////////////////////////////////
-	private void GeneratePath(Vector3 targetLocation, bool random = false)
+	private void GeneratePath( Vector3 targetLocation, bool random = false )
 	{
 		if (random)
 		{
 			// targetLocation = new Vector3( Random.Range( -5, 5 ), 0, Random.Range( -5, 5 ) );
-			targetLocation = Quaternion.Euler(0, -Random.Range(0, 360), 0) * Vector3.right * 5;
-		}
+			// targetLocation = Quaternion.Euler(0, -Random.Range(0, 360), 0) * Vector3.right * 5;
+			
+			Vector3 randomVectorOnPerimeter = Quaternion.Euler(0, Random.Range(0,360), 0) * Vector3.forward * 5;
+			targetLocation = transform.position + randomVectorOnPerimeter;
 
-		NavMesh.CalculatePath(transform.position, targetLocation, NavMesh.AllAreas, path);
+		}
+		currentCornerId = 0;
+		NavMesh.CalculatePath( transform.position, targetLocation, NavMesh.AllAreas, path );
 	}
 	//////////////////////////////////////////////////////////// EO OTHER METHODS //
 }
