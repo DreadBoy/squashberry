@@ -11,12 +11,19 @@ public class GameManager : MonoBehaviour {
 	public enum GameState{ Idle, Run }
 	private GameState _state;
 	public static int berriesOnTable = 0;
+	public static bool isGameOver = false;
 
 // UNITY METHODS ///////////////////////////////////////////////////////////////
 
 	void Awake()
 	{
 		currentState = GameState.Run;
+	}
+
+	void Start()
+	{
+		isGameOver = false;
+		print( "isGameOver: " + isGameOver );
 	}
 	
 	void FixedUpdate ()
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour {
 // OTHER METHODS ///////////////////////////////////////////////////////////////
 	public void SpawnBerry()
 	{
-		if (BerryBehaviour.instances.Count < 100)
+		if (BerryBehaviour.instances.Count < 100 && !isGameOver)
 		{
 			GameObject newBerry = Instantiate(Resources.Load("BlueBerry")) as GameObject;
 			newBerry.name = "Berry";

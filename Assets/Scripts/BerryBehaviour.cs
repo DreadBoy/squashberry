@@ -50,6 +50,7 @@ public class BerryBehaviour : MonoBehaviour
 
 		if( GameManager.berriesOnTable >= maxBerries ){
 			GameManager.berriesOnTable = 0;
+			GameManager.isGameOver = true;
 			GameObject.Find("Score123").GetComponent<SubmitScore>().PopulateScore();
 			GameObject.Find("Game Over 123").GetComponent<Animator>().SetTrigger("Game Over In");
 		}
@@ -57,6 +58,7 @@ public class BerryBehaviour : MonoBehaviour
 	void OnDisable()
 	{
 		instances.Remove(this);
+		GameManager.isGameOver = false;
 	}
 	void OnDestroy()
 	{
