@@ -66,6 +66,11 @@ public class BlenderBehaviour : MonoBehaviour
 			currentState = BlenderState.Blend;
 		}
 	}
+
+	void OnGUI()
+	{
+		GUI.Label( new Rect(0,0,Screen.width,Screen.width), ("berriesInBlender: " + berriesInBlender.Count) );
+	}
 	//////////////////////////////////////////////////////////// EO UNITY METHODS //
 
 
@@ -215,4 +220,5 @@ public class BlenderBehaviour : MonoBehaviour
 		// liquidAmount = 0;
 	}
 	// EO BLEND STATE //
+	//////////////////////////////////////////////////////////// EO STATE METHODS //
 }
