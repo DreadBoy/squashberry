@@ -31,9 +31,15 @@ public class BlenderLevel : MonoBehaviour
 		}
 	}
 
-	void Start()
+	void Awake()
 	{
 
 		BlenderLevel.Instaces.Add(this);
+	}
+
+	public static void EnableSmoothie()
+	{
+		//switch ()
+		//Instaces[0].gameObject.transform.Find
 	}
 }

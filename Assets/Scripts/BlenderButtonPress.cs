@@ -47,9 +47,12 @@ public class BlenderButtonPress : MonoBehaviour
 		//	}
 		//}
 
+		Debug.Log(BlenderBehaviour.berriesInBlender.Count);
+
 		foreach (BerryBehaviour n in BlenderBehaviour.berriesInBlender)
 		{
 			Destroy(n.gameObject);
+			Debug.Log("Berries destroyed");
 		}
 
 		yield return new WaitForSeconds(1.5f);
