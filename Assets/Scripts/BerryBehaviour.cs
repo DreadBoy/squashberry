@@ -43,6 +43,7 @@ public class BerryBehaviour : MonoBehaviour
 
 		float maxBerries = 3;
 		GameManager.berriesOnTable++;
+        GameObject.Find("BerriesOnTable").GetComponent<BerriesOnTable>().UpdateText(GameManager.berriesOnTable);
 		print( "GameManager.berriesOnTable: " + GameManager.berriesOnTable );
 
 		float scale = GameManager.berriesOnTable / maxBerries;
