@@ -22,6 +22,7 @@ public class BerryBehaviour : MonoBehaviour
 	public enum BerryState { Idle, Move, Squash, FromTable, ToBlender, InBlender, Die }
 	private BerryState _state;
 	public static List<BerryBehaviour> instances = new List<BerryBehaviour>();
+	public Texture SadTexture;
 	private float bornTime;
 	private Animator animator;
 	private SkinnedMeshRenderer skinnedMeshRenderer;
@@ -386,18 +387,11 @@ public class BerryBehaviour : MonoBehaviour
 
 	// FROM TABLE STATE //
 	private float fromTableStartTime;
-	private float liftAcceleration = 0.2f;
-	private float liftSpeed = 0;
 	private void FromTableEnterState()
 	{
 		DebugEnter("FromTable");
 
-		// Set timer
 		fromTableStartTime = Time.time;
-
-		// Unsquash
-		animator.SetTrigger("Idle");
-
 	}
 
 	private void FromTableState()
@@ -405,8 +399,7 @@ public class BerryBehaviour : MonoBehaviour
 		DebugExecute("FromTable");
 
 		// Move upwards
-		liftSpeed += liftAcceleration;
-		transform.position += Vector3.up * liftSpeed;
+		transform.position += Vector3.up * 2;
 
 		// After certain type, put it to blender
 		if (Time.time - fromTableStartTime > 0.5f)
@@ -428,11 +421,16 @@ public class BerryBehaviour : MonoBehaviour
 		// Set timer
 		toBlenderStartTime = Time.time;
 
-		// Set speed
-		liftSpeed = 1;
-
 		// Put it to starting position
-		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 20 + Quaternion.Euler(0, -Random.Range(0,360), 0) * Vector3.right * 2f;
+		transform.position = BlenderBehaviour.instance.transform.position + Vector3.up * 10 + Quaternion.Euler(0, -Random.Range(0, 360), 0) * Vector3.right * 1;
+
+
+		// Turn on colliders
+		GameObject.Find("Bone").GetComponent<SphereCollider>().enabled = true;
+		transform.GetComponent<Rigidbody>().isKinematic = false;
+
+		// Cange Texture
+		transform.Find("Berry").GetComponent<Renderer>().material.SetTexture(0, SadTexture);
 	}
 
 	private void ToBlenderState()
@@ -440,13 +438,13 @@ public class BerryBehaviour : MonoBehaviour
 		DebugExecute("ToBlender");
 
 
-		// Move downwards
-		// liftSpeed -= liftAcceleration;
-		transform.position -= Vector3.up * liftSpeed;
+		// // Move downwards
+		// transform.position -= Vector3.up * 2;
 
 		// When it arrives to the blender
 		// if( Time.time - toBlenderStartTime > 0.5f ){
-		if( transform.position.y < 8 ){
+		if (transform.position.y < BlenderBehaviour.instance.levelMarker.position.y)
+		{
 			// BlenderBehaviour.liquidAmount += 1;
 			// currentState = BerryState.Idle;
 			currentState = BerryState.InBlender;
@@ -466,23 +464,15 @@ public class BerryBehaviour : MonoBehaviour
 		DebugEnter("InBlender");
 
 		// Manage list of berries in blender
-		BlenderBehaviour.berriesInBlender.Add( this );
-
-		// Turn on colliders
-		GameObject.Find("Bone").GetComponent<SphereCollider>().enabled = true;
-
-		// Enable rigidbody
-		transform.GetComponent<Rigidbody>().isKinematic = false;
+		BlenderBehaviour.berriesInBlender.Add(this);
 	}
 
 	private void InBlenderState()
 	{
 		DebugExecute("InBlender");
 
-		if( Random.value > 0.999f )
-			GetComponent<Rigidbody>().AddForce( Vector3.up * Random.Range( 300, 500 ) );
-
-		Debug.DrawRay( transform.position, Vector3.up, Color.red );
+		if (Random.value > 0.999f)
+			GetComponent<Rigidbody>().AddForce(Vector3.up * Random.Range(300, 500));
 	}
 
 	private void InBlenderExitState()
