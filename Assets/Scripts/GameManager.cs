@@ -151,7 +151,9 @@ public class GameManager : MonoBehaviour {
 	private void RunEnterState()
 	{
 		DebugEnter( "Run" );
-		SpawnBerry();
+		// SpawnBerry();
+		Invoke("SpawnBerry", 1 );
+		
 	}
 
 	private void RunState()

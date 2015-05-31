@@ -41,7 +41,7 @@ public class BerryBehaviour : MonoBehaviour
 	{
 		instances.Add(this);
 
-		float maxBerries = 3;
+		float maxBerries = 10;
 		GameManager.berriesOnTable++;
         GameObject.Find("BerriesOnTable").GetComponent<BerriesOnTable>().UpdateText(GameManager.berriesOnTable);
 		print( "GameManager.berriesOnTable: " + GameManager.berriesOnTable );
