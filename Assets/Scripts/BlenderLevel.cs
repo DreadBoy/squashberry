@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BlenderLevel : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class BlenderLevel : MonoBehaviour
 			{
 				GameObject.Find("Compartment").GetComponent<Renderer>().material.SetTexture(0, Instaces[0].LevelTextures[value]);
 				_level = value;
+				GameObject.Find("ScoreMultiplier").GetComponent<Text>().text = "X" + (_level + 1).ToString();
 				Debug.Log("Texture set");
 			}
 		}
@@ -40,6 +42,7 @@ public class BlenderLevel : MonoBehaviour
 	public static void EnableSmoothie()
 	{
 		Debug.Log("Smoothie Enabled");
+
 		switch (BlenderLevel.Level)
 		{
 			case 0:

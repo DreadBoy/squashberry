@@ -49,7 +49,7 @@ public class BlenderButtonPress : MonoBehaviour
 		GetComponent<BoxCollider>().enabled = true;
 
 		Debug.Log("Score multiplier");
-		Settings.saveData.Score += berriesInBlender * BlenderLevel.Level * 10;
+		Settings.saveData.Score += berriesInBlender *( BlenderLevel.Level + 1) * 10;
 		GameObject.Find("Settings").GetComponent<Settings>().scoreDisplay.GetComponent<Text>().text = "Score: " + Settings.saveData.Score;
 
 		BlenderLevel.DisableSmoothie();
