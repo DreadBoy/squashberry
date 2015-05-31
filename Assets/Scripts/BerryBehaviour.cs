@@ -90,7 +90,7 @@ public class BerryBehaviour : MonoBehaviour
 		_state = BerryState.Move;
 		velocity = Vector3.forward;
 	}
-	public Transform temp;
+
 	void Update()
 	{
 		if( Input.GetMouseButtonDown(0) ){
@@ -98,7 +98,6 @@ public class BerryBehaviour : MonoBehaviour
 			Vector3 mouseOnTable = Input.mousePosition;
 			mouseOnTable = new Vector3( mouseOnTable.x, mouseOnTable.y, Camera.main.transform.position.y );
 			mouseOnTable = Camera.main.ScreenToWorldPoint( mouseOnTable );
-			temp.position = mouseOnTable;
 			GeneratePath( mouseOnTable, false );
 		}
 	}
