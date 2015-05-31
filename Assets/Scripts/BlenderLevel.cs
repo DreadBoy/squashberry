@@ -39,6 +39,7 @@ public class BlenderLevel : MonoBehaviour
 
 	public static void EnableSmoothie()
 	{
+		Debug.Log("Smoothie Enabled");
 		switch (BlenderLevel.Level)
 		{
 			case 0:

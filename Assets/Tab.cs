@@ -8,7 +8,7 @@ public class Tab : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetMouseButton(0))
+		if (Input.GetMouseButtonDown(0))
 		{
 			Debug.Log("Mouse Down");
 			RaycastHit hit;
@@ -32,7 +32,7 @@ public class Tab : MonoBehaviour
 							}
 							else
 							{
-								Table.Play();
+								//Table.Play();
 							}
 							break;
 						case "Button":
