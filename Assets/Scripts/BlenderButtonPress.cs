@@ -55,8 +55,12 @@ public class BlenderButtonPress : MonoBehaviour
 			Debug.Log("Berries destroyed");
 		}
 
-		yield return new WaitForSeconds(1.5f);
+		BlenderLevel.EnableSmoothie();	
+
+		yield return new WaitForSeconds(1.8f);
 
 		GetComponent<BoxCollider>().enabled = true;
+
+		BlenderLevel.DisableSmoothie();
 	}
 }

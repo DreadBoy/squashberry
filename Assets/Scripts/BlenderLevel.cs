@@ -39,7 +39,49 @@ public class BlenderLevel : MonoBehaviour
 
 	public static void EnableSmoothie()
 	{
-		//switch ()
-		//Instaces[0].gameObject.transform.Find
+		switch (BlenderLevel.Level)
+		{
+			case 0:
+				break;
+			case 1:
+				Instaces[0].gameObject.transform.Find("Smoothie.004").gameObject.SetActive(true);
+				break;
+			case 2:
+				Instaces[0].gameObject.transform.Find("Smoothie.003").gameObject.SetActive(true);
+				break;
+			case 3:
+				Instaces[0].gameObject.transform.Find("Smoothie.002").gameObject.SetActive(true);
+				break;
+			case 4:
+				Instaces[0].gameObject.transform.Find("Smoothie.001").gameObject.SetActive(true);
+				break;
+			case 5:
+				Instaces[0].gameObject.transform.Find("Smoothie.000").gameObject.SetActive(true);
+				break;
+		}
+	}
+
+	public static void DisableSmoothie()
+	{
+		switch (BlenderLevel.Level)
+		{
+			case 0:
+				break;
+			case 1:
+				Instaces[0].gameObject.transform.Find("Smoothie.004").gameObject.SetActive(false);
+				break;
+			case 2:
+				Instaces[0].gameObject.transform.Find("Smoothie.003").gameObject.SetActive(false);
+				break;
+			case 3:
+				Instaces[0].gameObject.transform.Find("Smoothie.002").gameObject.SetActive(false);
+				break;
+			case 4:
+				Instaces[0].gameObject.transform.Find("Smoothie.001").gameObject.SetActive(false);
+				break;
+			case 5:
+				Instaces[0].gameObject.transform.Find("Smoothie.000").gameObject.SetActive(false);
+				break;
+		}
 	}
 }
