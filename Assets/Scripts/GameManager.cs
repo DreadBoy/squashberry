@@ -169,10 +169,9 @@ public class GameManager : MonoBehaviour {
 			// Invoke("SpawnBerry", Random.Range(1f, 2f));
 			// Invoke("SpawnBerry", 0.4f );
 			Invoke("SpawnBerry", berrySpawnDelay + Random.Range( -0.1f, 0.1f ) );
+			
 			berrySpawnDelay -= 0.01f;
 			berrySpawnDelay = Mathf.Max( 0.5f, berrySpawnDelay );
-
-			print( "berrySpawnDelay: " + berrySpawnDelay );
 		}
 	}
 //////////////////////////////////////////////////////////// EO OTHER METHODS //
