@@ -97,7 +97,7 @@ public class BerryBehaviour : MonoBehaviour
 		velocity = Vector3.forward;
 	}
 
-<<<<<<< HEAD
+
 	//void Update()
 	//{
 	//	if( Input.GetMouseButtonDown(0) ){
@@ -108,7 +108,7 @@ public class BerryBehaviour : MonoBehaviour
 	//		GeneratePath( mouseOnTable, false );
 	//	}
 	//}
-=======
+
 	// void Update()
 	// {
 	// 	// DEBUG: Change path
@@ -121,7 +121,6 @@ public class BerryBehaviour : MonoBehaviour
 	// 	}
 	// }
 
->>>>>>> origin/master
 	void FixedUpdate()
 	{
 		ExecuteState();
